@@ -1,7 +1,7 @@
 import Iron from '@hapi/iron';
 import CookieService from '../../../lib/cookie';
 
-/**
+/*
  * This route checks if a user is autheticated
  */
 
@@ -24,7 +24,8 @@ export default async (req, res) => {
       return res.status(400).json({ message: 'No cookies were sent' });
     }
   } catch (error) {
-    console.log('ERROR:', error);
+    console.log('COOKIE AUTH ERROR', error);
+    return res.status(400).json({ message: 'cookie auth error' });
   }
   res.json(userFromCookie);
 };

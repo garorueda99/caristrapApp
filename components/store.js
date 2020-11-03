@@ -7,7 +7,7 @@ export const MagicContext = createContext();
 export const UserContext = createContext();
 export const LoggedInContext = createContext();
 
-/* this function wraps our entire app within our context APIs so they all have access to their values */
+/* this function wraps the entire app within the context APIs  */
 const Store = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -15,8 +15,10 @@ const Store = ({ children }) => {
 
   useEffect(() => {
     (async () => {
+      /*loads Magic as variable*/
       let m = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUB_KEY);
       await setMagic(m);
+      /* Check if there is a token on the browser*/
       const data = await fetch('/api/user');
       const response = await data.json();
       if (data.ok) {
