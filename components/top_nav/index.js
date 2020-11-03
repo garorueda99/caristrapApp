@@ -1,4 +1,4 @@
-// import MenuItems from './main_nav_menu_items';
+import MenuItems from './menu_items';
 import styles from '../../styles/Top_nav.module.css';
 
 export default function main_nav() {
@@ -8,7 +8,7 @@ export default function main_nav() {
         <img src='/logo.svg' className={styles.nav_logo} alt='Logo' />
       </div>
 
-      {/* <MenuItems /> */}
+      <MenuItems />
     </nav>
   );
 }

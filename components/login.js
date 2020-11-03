@@ -1,11 +1,17 @@
 import styles from '../styles/Login.module.css';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { MagicContext, UserContext, LoggedInContext } from './store';
+import { useRouter } from 'next/router';
 
 export default function Login() {
   const [magic] = useContext(MagicContext);
   const [user, setUser] = useContext(UserContext);
   const [loggedin, setLoggedIn] = useContext(LoggedInContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/');
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,7 +22,7 @@ export default function Login() {
       email: elements.email.value,
     });
 
-    //check if token in pc - cookie
+    //Post token in pc - cookie
     const authRequest = await fetch('/api/user/login', {
       method: 'POST',
       headers: new Headers({ Authorization: `Bearer ${did}` }),

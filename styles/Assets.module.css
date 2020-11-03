@@ -1,0 +1,17 @@
+.mainContainer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.headerWrapper {
+  width: 100%;
+  display: flex;
+  padding: 16px;
+}
+
+.gridWrapper {
+  flex: 1;
+  display: flex;
+  padding: 16px;
+}

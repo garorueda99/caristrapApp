@@ -1,0 +1,12 @@
+.inputContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+  margin: 0.5rem;
+  /* border: 2px solid purple; */
+}
+
+.label {
+  /* min-width: 590px; */
+  /* border: 2px solid green; */
+}

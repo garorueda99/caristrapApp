@@ -1,0 +1,39 @@
+.wrapper {
+  min-width: 250px;
+  height: 100%;
+  background-color: var(--card-color-background);
+  font-size: 1.4rem;
+  padding: 10px 2px;
+  border-right: 1.5px dotted var(--primary-border);
+  /* box-shadow: 6px 0px 4px 0px var(--primary-border); */
+}
+
+.list {
+  list-style-type: none;
+  padding: 4px;
+}
+
+.list li {
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  padding: 12px 2px 12px 15px;
+}
+
+.list li:hover {
+  background-color: var(--primary-color-background);
+}
+.list li > a {
+  line-height: 1.4rem;
+}
+
+.icons {
+  margin-right: 6px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .wrapper {
+    display: none;
+  }
+}

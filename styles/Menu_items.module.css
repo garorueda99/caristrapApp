@@ -1,0 +1,30 @@
+.mobile {
+  display: none;
+}
+
+.desktop {
+  display: flex;
+  justify-content: space-between;
+  min-width: 90px;
+}
+
+.iconButton {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+}
+.iconButton:hover {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+}
+
+@media only screen and (max-width: 1024px) {
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: flex;
+  }
+}

@@ -32,12 +32,9 @@ const Store = ({ children }) => {
     <LoggedInContext.Provider value={[loggedIn, setLoggedIn]}>
       <MagicContext.Provider value={[magic]}>
         <UserContext.Provider value={[user, setUser]}>
-          <div>
-            {/* <div>==> USER: {JSON.stringify(user)}</div> */}
-            <Layout>
-              <>{children}</>
-            </Layout>
-          </div>
+          <Layout>
+            <>{children}</>
+          </Layout>
         </UserContext.Provider>
       </MagicContext.Provider>
     </LoggedInContext.Provider>
