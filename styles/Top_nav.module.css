@@ -1,0 +1,14 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 65px;
+  padding: 0 10px;
+  background-color: var(--secondary-color-background);
+}
+
+.nav_logo {
+  height: 45px;
+  cursor: pointer;
+  border-radius: 50%;
+}

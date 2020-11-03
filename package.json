@@ -8,8 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@hapi/iron": "^6.0.0",
+    "@magic-sdk/admin": "^1.2.2",
+    "cookie": "^0.4.1",
+    "magic-sdk": "^3.0.1",
+    "mongodb": "^3.6.2",
     "next": "10.0.0",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-icons": "^3.11.0",
+    "swr": "^0.3.8"
   }
 }
