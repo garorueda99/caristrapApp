@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useContext } from 'react';
-import { LoggedInContext } from './store';
+import { LoggedInContext, UserContext } from './store';
 import styles from '../styles/Layout.module.css';
 import MainNav from './top_nav';
 import SideNav from './side_nav';
@@ -8,7 +8,7 @@ import Login from './login';
 
 const Layout = ({ children }) => {
   const [loggedIn, setLoggedIn] = useContext(LoggedInContext);
-
+  const [user, setUser] = useContext(UserContext);
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -23,10 +23,8 @@ const Layout = ({ children }) => {
           </div>
         </div>
       ) : (
-        // Else, show the Login page
-        <>
-          <Login />
-        </>
+        // Else, show the Login page or spinner
+        <Login />
       )}
     </div>
   );

@@ -16,6 +16,18 @@
   height: 100%;
 }
 
+.spinner {
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  border: 2px solid black;
+  margin: 0 auto;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: white;
+}
+
 /* .nav_user {
   margin: 28px 10px 0 10px;
   color: rgb(231, 231, 231);

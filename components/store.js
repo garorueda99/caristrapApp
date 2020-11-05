@@ -8,8 +8,8 @@ export const UserContext = createContext();
 export const LoggedInContext = createContext();
 
 /* this function wraps the entire app within the context APIs  */
-const Store = ({ children }) => {
-  const [user, setUser] = useState(null);
+const Store = ({ children, userInfo, authorized }) => {
+  const [user, setUser] = useState(userInfo);
   const [loggedIn, setLoggedIn] = useState(false);
   const [magic, setMagic] = useState();
 
@@ -19,14 +19,12 @@ const Store = ({ children }) => {
       let m = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUB_KEY);
       await setMagic(m);
       /* Check if there is a token on the browser*/
-      const data = await fetch('/api/user');
-      const response = await data.json();
-      if (data.ok) {
-        setUser(response.email);
-        setLoggedIn(true);
-      }
     })();
   }, []);
+
+  useEffect(() => {
+    setLoggedIn(authorized);
+  }, [authorized]);
 
   return (
     <LoggedInContext.Provider value={[loggedIn, setLoggedIn]}>

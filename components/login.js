@@ -37,7 +37,6 @@ export default function Login() {
 
   return (
     <div className={styles.container}>
-      {user}
       <main className={styles.main}>
         <h1 className={styles.title}>Caristrap Maintenance App</h1>
 
