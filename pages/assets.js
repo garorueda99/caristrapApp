@@ -6,15 +6,18 @@ import makeData from '../components/makeData';
 import styled from 'styled-components';
 
 const Styles = styled.div`
-  /* padding: 1rem; */
-  display: block;
-  max-width: 100%;
+  padding: 1rem;
   border: 2px solid yellow;
-  overflow-x: hidden;
+  overflow: hidden;
+
+  .user {
+    background-color: blue;
+    color: white;
+  }
+
   table {
     border-spacing: 0;
     border: 6px solid pink;
-    max-width: 100%;
 
     tr {
       :last-child {
@@ -55,7 +58,13 @@ export default function assets() {
       {
         Header: 'First Name',
         accessor: 'firstName',
-        maxWidth: 100,
+        className: 'user',
+        style: {
+          fontWeight: 'bolder',
+          color: 'red',
+          maxWidth: '10px',
+          overflow: 'hidden',
+        },
       },
       {
         Header: 'Last Name',
@@ -96,9 +105,6 @@ export default function assets() {
     );
   };
 
-  React.useEffect(() => {
-    setSkipPageReset(false);
-  }, [data]);
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerWrapper}>

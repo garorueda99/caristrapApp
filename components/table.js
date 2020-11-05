@@ -34,7 +34,18 @@ const defaultColumn = {
   Cell: EditableCell,
 };
 
-export default function Table({ columns, data, updateMyData, skipPageReset }) {
+const defaultPropGetter = () => ({});
+
+export default function Table({
+  columns,
+  data,
+  updateMyData,
+  skipPageReset,
+  getHeaderProps = defaultPropGetter,
+  getColumnProps = defaultPropGetter,
+  getRowProps = defaultPropGetter,
+  getCellProps = defaultPropGetter,
+}) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -69,12 +80,23 @@ export default function Table({ columns, data, updateMyData, skipPageReset }) {
 
   return (
     <>
-      <table style={{ width: '200px' }}>
+      <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <th
+                  {...column.getHeaderProps([
+                    {
+                      className: column.className,
+                      style: column.style,
+                    },
+                    getColumnProps(column),
+                    getHeaderProps(column),
+                  ])}
+                >
+                  {column.render('Header')}
+                </th>
               ))}
             </tr>
           ))}
@@ -86,7 +108,18 @@ export default function Table({ columns, data, updateMyData, skipPageReset }) {
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    <td
+                      {...cell.getCellProps([
+                        {
+                          className: cell.column.className,
+                          style: cell.column.style,
+                        },
+                        getColumnProps(cell.column),
+                        getCellProps(cell),
+                      ])}
+                    >
+                      {cell.render('Cell')}
+                    </td>
                   );
                 })}
               </tr>
