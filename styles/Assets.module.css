@@ -12,7 +12,6 @@
 
 .gridWrapper {
   flex: 1;
-  border: 2px solid orange;
   /* display: flex; */
   padding: 16px;
   max-width: 100%;

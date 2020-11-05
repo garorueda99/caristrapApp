@@ -6,18 +6,20 @@ import makeData from '../components/makeData';
 import styled from 'styled-components';
 
 const Styles = styled.div`
-  padding: 1rem;
-  border: 2px solid yellow;
-  overflow: hidden;
+  background-color: var(--card-color-background);
+  box-shadow: 0px 0px 3px 0px var(--primary-border);
+  border-radius: 4px;
+  /* border: 2px solid blue; */
+  padding: 30px 20px 10px 20px;
 
-  .user {
-    background-color: blue;
+  /* .user {
     color: white;
-  }
+  } */
 
   table {
     border-spacing: 0;
-    border: 6px solid pink;
+    border: 2px solid var(--primary-border);
+    border-radius: 4px;
 
     tr {
       :last-child {
@@ -61,7 +63,6 @@ export default function assets() {
         className: 'user',
         style: {
           fontWeight: 'bolder',
-          color: 'red',
           maxWidth: '10px',
           overflow: 'hidden',
         },
@@ -69,7 +70,11 @@ export default function assets() {
       {
         Header: 'Last Name',
         accessor: 'lastName',
-        maxWidth: 50,
+        style: {
+          fontWeight: 'bolder',
+          maxWidth: '20px',
+          overflow: 'hidden',
+        },
       },
       {
         Header: 'Age',
