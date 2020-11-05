@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AssetsBar from '../components/assetsBar';
 import Table from '../components/table';
 import styles from '../styles/Assets.module.css';
@@ -58,31 +58,38 @@ export default function assets() {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'First Name',
-        accessor: 'firstName',
-        className: 'user',
+        Header: 'Description',
+        accessor: 'machine_name',
+        // className: 'user',
         style: {
           fontWeight: 'bolder',
-          maxWidth: '10px',
           overflow: 'hidden',
         },
       },
       {
-        Header: 'Last Name',
-        accessor: 'lastName',
+        Header: 'Tag#',
+        accessor: 'tag',
         style: {
           fontWeight: 'bolder',
-          maxWidth: '20px',
+          overflow: 'hidden',
+          maxWidth: '30px',
+        },
+      },
+      {
+        Header: 'Type',
+        accessor: 'type',
+        style: {
+          fontWeight: 'bolder',
           overflow: 'hidden',
         },
       },
       {
-        Header: 'Age',
-        accessor: 'age',
+        Header: 'Manufacturer',
+        accessor: 'manufacturer',
       },
       {
-        Header: 'Visits',
-        accessor: 'visits',
+        Header: 'Serial',
+        accessor: 'serial',
       },
       {
         Header: 'Status',
@@ -92,8 +99,17 @@ export default function assets() {
     []
   );
 
-  const [data, setData] = React.useState(() => makeData(20));
+  const [data, setData] = React.useState([]);
   const [skipPageReset, setSkipPageReset] = React.useState(false);
+
+  useEffect(async () => {
+    try {
+      const res = await fetch('/api/assets');
+      const data = await res.json();
+      setData(data.assets);
+    } catch (err) {}
+  }, []);
+
   const updateMyData = (rowIndex, columnId, value) => {
     // We also turn on the flag to not reset the page
     setSkipPageReset(true);
