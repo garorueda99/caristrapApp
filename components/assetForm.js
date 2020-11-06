@@ -2,6 +2,7 @@ import styles from '../styles/AssetForm.module.css';
 import { useState } from 'react';
 
 export default function assetForm({ setShowModal, setData }) {
+  console.log('hello');
   const [assetInfo, setAssetInfo] = useState({});
   const handleSubmit = async (e) => {
     e.preventDefault();
