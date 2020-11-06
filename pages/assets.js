@@ -112,7 +112,9 @@ export default function assets() {
       const data = await res.json();
       console.log('DAta ===>', data, 'ASSETS', data.assets);
       setData(data.assets);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   const updateMyData = (rowIndex, columnId, value) => {
