@@ -1,7 +1,7 @@
 import styles from '../styles/AssetForm.module.css';
 import { useState } from 'react';
 
-export default function assetForm() {
+export default function assetForm({ setShowModal, setData }) {
   const [assetInfo, setAssetInfo] = useState({});
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,6 +14,10 @@ export default function assetForm() {
         },
         body: JSON.stringify(assetInfo),
       });
+      const data = await res.json();
+      console.log('data==>', data);
+      setData(data.assets);
+      setShowModal(false);
     } catch (err) {}
   };
 
@@ -59,6 +63,12 @@ export default function assetForm() {
             Serial #:
           </label>
           <input name='serial' onChange={handleAssetInfoChange} />
+        </div>
+        <div className={styles.inputContainer}>
+          <label htmlFor='status' className={styles.label}>
+            Status:
+          </label>
+          <input name='status' onChange={handleAssetInfoChange} />
         </div>
         <button>SAVE</button>
       </form>

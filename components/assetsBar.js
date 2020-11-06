@@ -2,8 +2,7 @@ import { useState } from 'react';
 import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
 import AssetForm from './assetForm';
-export default function assetsBar() {
-  const [showModal, setShowModal] = useState(false);
+export default function assetsBar({ showModal, setShowModal, setData }) {
   return (
     <div className={styles.wrapper}>
       {/* <label className="rocker rocker-small"/> */}
@@ -28,7 +27,7 @@ export default function assetsBar() {
       </div>
       {showModal && (
         <Modal setShowModal={setShowModal}>
-          <AssetForm />
+          <AssetForm setShowModal={setShowModal} setData={setData} />
         </Modal>
       )}
     </div>

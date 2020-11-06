@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useTable, usePagination } from 'react-table';
 
 // Create an editable cell renderer

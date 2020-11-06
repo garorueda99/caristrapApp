@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AssetsBar from '../components/assetsBar';
 import Table from '../components/table';
 import styles from '../styles/Assets.module.css';
-import makeData from '../components/makeData';
 import styled from 'styled-components';
+// import useSWR from 'swr';
+
+// const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const Styles = styled.div`
   background-color: var(--card-color-background);
@@ -55,49 +57,51 @@ const Styles = styled.div`
   }
 `;
 export default function assets() {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Description',
-        accessor: 'machine_name',
-        // className: 'user',
-        style: {
-          fontWeight: 'bolder',
-          overflow: 'hidden',
-        },
+  const columns = [
+    {
+      Header: 'Description',
+      accessor: 'machine_name',
+      // className: 'user',
+      style: {
+        fontWeight: 'bolder',
+        overflow: 'hidden',
       },
-      {
-        Header: 'Tag#',
-        accessor: 'tag',
-        style: {
-          fontWeight: 'bolder',
-          overflow: 'hidden',
-          maxWidth: '30px',
-        },
+    },
+    {
+      Header: 'Tag#',
+      accessor: 'tag',
+      style: {
+        fontWeight: 'bolder',
+        overflow: 'hidden',
+        maxWidth: '30px',
       },
-      {
-        Header: 'Type',
-        accessor: 'type',
-        style: {
-          fontWeight: 'bolder',
-          overflow: 'hidden',
-        },
+    },
+    {
+      Header: 'Type',
+      accessor: 'type',
+      style: {
+        fontWeight: 'bolder',
+        overflow: 'hidden',
       },
-      {
-        Header: 'Manufacturer',
-        accessor: 'manufacturer',
-      },
-      {
-        Header: 'Serial',
-        accessor: 'serial',
-      },
-      {
-        Header: 'Status',
-        accessor: 'status',
-      },
-    ],
-    []
-  );
+    },
+    {
+      Header: 'Manufacturer',
+      accessor: 'manufacturer',
+    },
+    {
+      Header: 'Serial',
+      accessor: 'serial',
+    },
+    {
+      Header: 'Status',
+      accessor: 'status',
+    },
+  ];
+
+  // const { data: result, error } = useSWR('/api/assets', fetcher);
+
+  // if (error) return <h1>Something went wrong!</h1>;
+  // if (!result) return <h1>Loading...</h1>;
 
   const [data, setData] = React.useState([]);
   const [skipPageReset, setSkipPageReset] = React.useState(false);
@@ -107,6 +111,7 @@ export default function assets() {
       const res = await fetch('/api/assets');
       const data = await res.json();
       setData(data.assets);
+      setRecord(idle);
     } catch (err) {}
   }, []);
 
@@ -126,10 +131,15 @@ export default function assets() {
     );
   };
 
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerWrapper}>
-        <AssetsBar />
+        <AssetsBar
+          showModal={showModal}
+          setShowModal={setShowModal}
+          setData={setData}
+        />
       </div>
       <div className={styles.gridWrapper}>
         <Styles>

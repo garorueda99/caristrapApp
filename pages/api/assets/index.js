@@ -6,7 +6,18 @@ export default async (req, res) => {
       const result = await db
         .collection('assets')
         .insertOne(JSON.parse(req.body));
-      res.json({ ok: true });
+      await db
+        .collection('assets')
+        .find()
+        .toArray((err, result) => {
+          if (result.length) {
+            res.status(200).json({
+              assets: result,
+            });
+          } else {
+            res.status(500).json({ status: 400, message: 'Not found' });
+          }
+        });
       break;
     case 'GET':
       await db
