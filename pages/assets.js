@@ -108,7 +108,9 @@ export default function assets() {
 
   useEffect(async () => {
     try {
+      console.log('BEFORE FETCH');
       const res = await fetch('/api/assets');
+      console.log('RES', res);
       const data = await res.json();
       console.log('DAta ===>', data, 'ASSETS', data.assets);
       setData(data.assets);
