@@ -113,7 +113,7 @@ export default function assets() {
       console.log('DAta ===>', data, 'ASSETS', data.assets);
       setData(data.assets);
     } catch (err) {
-      console.log(err);
+      console.log('HERE THE ERROR:', err);
     }
   }, []);
 
