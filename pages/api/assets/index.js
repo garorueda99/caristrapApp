@@ -1,5 +1,6 @@
 import { connectToDatabase } from '../../../lib/mongodb';
 export default async (req, res) => {
+  console.log('Just landed Here');
   const { db } = await connectToDatabase();
 
   console.log('info from the infra World');
