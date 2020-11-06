@@ -110,8 +110,8 @@ export default function assets() {
     try {
       const res = await fetch('/api/assets');
       const data = await res.json();
+      console.log('DAta ===>', data, 'ASSETS', data.assets);
       setData(data.assets);
-      setRecord(idle);
     } catch (err) {}
   }, []);
 
