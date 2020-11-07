@@ -2,60 +2,11 @@ import React, { useEffect, useState } from 'react';
 import AssetsBar from '../components/assetsBar';
 import Table from '../components/table';
 import styles from '../styles/Pages.module.css';
-import styled from 'styled-components';
+
 // import useSWR from 'swr';
 
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const Styles = styled.div`
-  background-color: var(--card-color-background);
-  box-shadow: 0px 0px 3px 0px var(--primary-border);
-  border-radius: 4px;
-  /* border: 2px solid blue; */
-  padding: 30px 20px 10px 20px;
-
-  /* .user {
-    color: white;
-  } */
-
-  table {
-    border-spacing: 0;
-    border: 2px solid var(--primary-border);
-    border-radius: 4px;
-
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-      width: 1%;
-
-      :last-child {
-        border-right: 0;
-      }
-
-      input {
-        font-size: 1rem;
-        padding: 0;
-        margin: 0;
-        border: 0;
-      }
-    }
-  }
-
-  .pagination {
-    padding: 0.5rem;
-  }
-`;
 export default function assets() {
   const columns = [
     {
@@ -138,14 +89,12 @@ export default function assets() {
         <AssetsBar />
       </div>
       <div className={styles.gridWrapper}>
-        <Styles>
-          <Table
-            columns={columns}
-            data={data}
-            updateMyData={updateMyData}
-            skipPageReset={skipPageReset}
-          />
-        </Styles>
+        <Table
+          columns={columns}
+          data={data}
+          updateMyData={updateMyData}
+          skipPageReset={skipPageReset}
+        />
       </div>
     </div>
   );

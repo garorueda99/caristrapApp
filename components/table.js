@@ -1,5 +1,6 @@
 import React from 'react';
-import { useTable, usePagination } from 'react-table';
+import { useTable, usePagination, useRowSelect } from 'react-table';
+import styled from 'styled-components';
 
 // Create an editable cell renderer
 const EditableCell = ({
@@ -35,6 +36,23 @@ const defaultColumn = {
 
 const defaultPropGetter = () => ({});
 
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
+
+    return (
+      <>
+        <input type='checkbox' ref={resolvedRef} {...rest} />
+      </>
+    );
+  }
+);
+
 export default function Table({
   columns,
   data,
@@ -49,6 +67,7 @@ export default function Table({
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    rows,
     prepareRow,
     page,
     canPreviousPage,
@@ -59,7 +78,8 @@ export default function Table({
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize },
+    selectedFlatRows,
+    state: { pageIndex, pageSize, selectedRowIds },
   } = useTable(
     {
       columns,
@@ -74,11 +94,35 @@ export default function Table({
       // cell renderer!
       updateMyData,
     },
-    usePagination
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        // Let's make a column for selection
+        {
+          id: 'selection',
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
 
   return (
-    <>
+    <Styles>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -120,6 +164,7 @@ export default function Table({
                       {cell.render('Cell')}
                     </td>
                   );
+                  <td>Me HERE</td>;
                 })}
               </tr>
             );
@@ -169,7 +214,61 @@ export default function Table({
             </option>
           ))}
         </select>
+        {/* <code>{JSON.stringify(selectedRowIds)}</code> */}
       </div>
-    </>
+    </Styles>
   );
 }
+
+const Styles = styled.div`
+  background-color: var(--card-color-background);
+  box-shadow: 0px 0px 3px 0px var(--primary-border);
+  border-radius: 4px;
+  /* border: 2px solid blue; */
+  padding: 30px 20px 10px 20px;
+
+  /* .user {
+    color: white;
+  } */
+
+  table {
+    border-spacing: 0;
+    border: 2px solid var(--primary-border);
+    border-radius: 4px;
+
+    tr {
+      :last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    th,
+    td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+      width: 1%;
+
+      :first-child {
+        max-width: 15px;
+      }
+      :last-child {
+        border-right: 0;
+      }
+
+      input {
+        font-size: 1rem;
+        padding: 0;
+        margin: 0;
+        border: 0;
+      }
+    }
+  }
+
+  .pagination {
+    padding: 0.5rem;
+  }
+`;
