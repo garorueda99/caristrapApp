@@ -10,6 +10,16 @@ import styles from '../styles/Pages.module.css';
 export default function assets() {
   const columns = [
     {
+      Header: 'id',
+      accessor: '_id',
+      // className: 'user',
+      style: {
+        fontWeight: 'bolder',
+        overflow: 'hidden',
+        display: 'none',
+      },
+    },
+    {
       Header: 'Description',
       accessor: 'machine_name',
       // className: 'user',
@@ -82,11 +92,16 @@ export default function assets() {
       })
     );
   };
+  const [selectedRows, setSelectedRows] = useState([]);
 
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerWrapper}>
-        <AssetsBar />
+        <AssetsBar
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
+          setData={setData}
+        />
       </div>
       <div className={styles.gridWrapper}>
         <Table
@@ -94,6 +109,7 @@ export default function assets() {
           data={data}
           updateMyData={updateMyData}
           skipPageReset={skipPageReset}
+          setSelectedRows={setSelectedRows}
         />
       </div>
     </div>

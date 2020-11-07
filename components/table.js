@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTable, usePagination, useRowSelect } from 'react-table';
 import styled from 'styled-components';
 
@@ -58,6 +58,7 @@ export default function Table({
   data,
   updateMyData,
   skipPageReset,
+  setSelectedRows,
   getHeaderProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
   getRowProps = defaultPropGetter,
@@ -121,6 +122,10 @@ export default function Table({
     }
   );
 
+  useEffect(() => {
+    selectedFlatRows.length > 0 &&
+      setSelectedRows(selectedFlatRows.map((d) => d.original['_id']));
+  }, [selectedFlatRows.length]);
   return (
     <Styles>
       <table {...getTableProps()}>
@@ -214,7 +219,6 @@ export default function Table({
             </option>
           ))}
         </select>
-        {/* <code>{JSON.stringify(selectedRowIds)}</code> */}
       </div>
     </Styles>
   );
