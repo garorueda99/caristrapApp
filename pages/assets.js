@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AssetsBar from '../components/assetsBar';
 import Table from '../components/table';
-import styles from '../styles/Assets.module.css';
+import styles from '../styles/Pages.module.css';
 import styled from 'styled-components';
 // import useSWR from 'swr';
 
@@ -108,14 +108,11 @@ export default function assets() {
 
   useEffect(async () => {
     try {
-      console.log('BEFORE FETCH');
       const res = await fetch('/api/assets');
-      console.log('RES', res);
       const data = await res.json();
-      console.log('DAta ===>', data, 'ASSETS', data.assets);
       setData(data.assets);
     } catch (err) {
-      console.log('HERE THE ERROR:', err);
+      console.log('ERROR:', err);
     }
   }, []);
 
@@ -135,15 +132,10 @@ export default function assets() {
     );
   };
 
-  const [showModal, setShowModal] = useState(false);
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerWrapper}>
-        <AssetsBar
-          showModal={showModal}
-          setShowModal={setShowModal}
-          setData={setData}
-        />
+        <AssetsBar />
       </div>
       <div className={styles.gridWrapper}>
         <Styles>

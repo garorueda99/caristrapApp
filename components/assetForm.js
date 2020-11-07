@@ -1,7 +1,7 @@
 import styles from '../styles/AssetForm.module.css';
 import { useState } from 'react';
 
-export default function assetForm({ setShowModal, setData }) {
+export default function assetForm({ setShowModal }) {
   console.log('hello');
   const [assetInfo, setAssetInfo] = useState({});
   const handleSubmit = async (e) => {
@@ -17,7 +17,6 @@ export default function assetForm({ setShowModal, setData }) {
       });
       const data = await res.json();
       console.log('data==>', data);
-      setData(data.assets);
       setShowModal(false);
     } catch (err) {}
   };
