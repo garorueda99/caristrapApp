@@ -24,6 +24,21 @@
   border-radius: 4px;
 }
 
+.smallButton {
+  border: 1.5px dotted var(--primary-border);
+  background-color: var(--primary-color-background);
+  color: var(--primary-color-text);
+  border-radius: 4px;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.smallButton:hover {
+  background-color: var(--hover-color-background);
+  color: white;
+}
 .formWrapper {
   /* border: 2px solid blue; */
   display: flex;
@@ -60,7 +75,6 @@
 }
 
 .sectionWrapper {
-  border-bottom: 1px solid gray;
   border-top: 1px solid gray;
   padding: 15px 0;
 }
@@ -71,9 +85,21 @@
 }
 
 .step {
-  background-color: teal;
+  border: 1px dotted var(--primary-border);
+  background-color: var(--primary-color-background);
   width: 180px;
   padding: 10px;
-  color: white;
   border-radius: 16px;
+}
+
+.stepBox {
+  position: relative;
+}
+
+.stepBox textarea {
+  width: 100%;
+  border-radius: 4px;
+  border: 2px solid var(--primary-border);
+  margin-bottom: 1px;
+  padding: 0 16px;
 }

@@ -1,5 +1,5 @@
 import styles from '../styles/TodoForm.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import { GrAddCircle, GrPowerCycle } from 'react-icons/gr';
 import { FaRegCalendarAlt } from 'react-icons/fa';
@@ -11,7 +11,10 @@ export default function todoForm({ setShowModal, setData }) {
   const [assetInfo, setAssetInfo] = useState({});
   const [title, setTitle] = useState('New Task Title');
   const [startDate, setStartDate] = useState(new Date());
+  const [step, setStep] = useState(null);
   const [steps, setSteps] = useState([]);
+  const [stepIndex, setStepIndex] = useState(0);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -37,7 +40,9 @@ export default function todoForm({ setShowModal, setData }) {
   };
 
   const validate = () => {};
-
+  useEffect(() => {
+    setStep(null);
+  }, [steps]);
   return (
     <div className={styles.wrapper}>
       <form className={styles.formWrapper} onSubmit={handleSubmit}>
@@ -80,15 +85,33 @@ export default function todoForm({ setShowModal, setData }) {
             </select>
           </div>
         </section>
-        <div className={styles.inputContainer}>
-          <button className={styles.button}>
-            <GrAddCircle size='35' />
-          </button>
-          <h2>Steps {steps.length === 0 ? '' : `(${steps.length})`}</h2>
-        </div>
-        <div className={styles.stepsContainer}>
-          <div className={styles.step}>Step1...</div>
-        </div>
+        <section className={styles.sectionWrapper}>
+          <h2>Steps {steps.length === 0 ? '' : `(${steps.length})`}:</h2>
+          <div className={styles.stepBox}>
+            <textarea
+              rows='5'
+              value={step}
+              onChange={(e) => {
+                setStep(e.target.value);
+              }}
+            />
+
+            <button
+              className={styles.smallButton}
+              onClick={() => {
+                setSteps([...steps, step]);
+              }}
+            >
+              ADD STEP
+            </button>
+          </div>
+          <div className={styles.stepsContainer}>
+            {steps.map((step) => (
+              <div className={styles.step}>{step}</div>
+            ))}
+          </div>
+        </section>
+
         <button className={styles.button}>SAVE</button>
       </form>
     </div>
