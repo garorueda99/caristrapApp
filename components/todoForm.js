@@ -11,9 +11,9 @@ export default function todoForm({ setShowModal, setData }) {
   const [assetInfo, setAssetInfo] = useState({});
   const [title, setTitle] = useState('New Task Title');
   const [startDate, setStartDate] = useState(new Date());
-  const [step, setStep] = useState(null);
+  const [step, setStep] = useState('');
   const [steps, setSteps] = useState([]);
-  const [stepIndex, setStepIndex] = useState(0);
+  const [stepIndex, setStepIndex] = useState(-1);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,6 +43,7 @@ export default function todoForm({ setShowModal, setData }) {
   useEffect(() => {
     setStep(null);
   }, [steps]);
+
   return (
     <div className={styles.wrapper}>
       <form className={styles.formWrapper} onSubmit={handleSubmit}>
@@ -95,19 +96,63 @@ export default function todoForm({ setShowModal, setData }) {
                 setStep(e.target.value);
               }}
             />
-
-            <button
-              className={styles.smallButton}
-              onClick={() => {
-                setSteps([...steps, step]);
-              }}
-            >
-              ADD STEP
-            </button>
+            {stepIndex >= 0 ? (
+              <button
+                type='button'
+                className={styles.smallButton}
+                onClick={() => {
+                  if (step.length > 0) {
+                    const newArray = steps;
+                    newArray.splice(stepIndex, 1, step);
+                    setSteps([...newArray]);
+                    setStep('');
+                    setStepIndex(-1);
+                  }
+                }}
+              >
+                Modify STEP
+              </button>
+            ) : (
+              <button
+                type='button'
+                className={styles.smallButton}
+                onClick={() => {
+                  if (step.length > 0) {
+                    setSteps([...steps, step]);
+                    setStep('');
+                  }
+                }}
+              >
+                ADD STEP
+              </button>
+            )}
           </div>
+
           <div className={styles.stepsContainer}>
-            {steps.map((step) => (
-              <div className={styles.step}>{step}</div>
+            {steps.map((step, index) => (
+              <div data-key={index}>
+                <button
+                  type='button'
+                  onClick={(e) => {
+                    setStep(steps[index]);
+                    setStepIndex(index);
+                  }}
+                >
+                  <div className={styles.step} data-key={index}>
+                    {step}
+                  </div>
+                </button>
+                <button
+                  type='button'
+                  onClick={(e) => {
+                    const newArray = steps;
+                    newArray.splice(index, 1);
+                    setSteps([...newArray]);
+                  }}
+                >
+                  Delete ME
+                </button>
+              </div>
             ))}
           </div>
         </section>
