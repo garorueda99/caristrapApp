@@ -255,9 +255,12 @@ const Styles = styled.div`
       border-bottom: 1px solid black;
       border-right: 1px solid black;
       width: 1%;
+      text-align: center; /* center checkbox horizontally */
+      vertical-align: middle; /* center checkbox vertically */
 
       :first-child {
         max-width: 15px;
+        text-justify: center;
       }
       :last-child {
         border-right: 0;
@@ -268,6 +271,7 @@ const Styles = styled.div`
         padding: 0;
         margin: 0;
         border: 0;
+        /* margin: 0 40px; */
       }
     }
   }

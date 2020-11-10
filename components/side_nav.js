@@ -11,14 +11,14 @@ export default function side_bar() {
     <div className={styles.wrapper}>
       <User />
       <ul className={styles.list}>
-        <Link href='/'>
+        {/* <Link href='/'>
           <a>
             <li>
               <BiHomeSmile className={styles.icons} />
               HOME
             </li>
           </a>
-        </Link>
+        </Link> */}
         <Link href='/dashboard'>
           <a>
             <li>

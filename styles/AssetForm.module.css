@@ -1,12 +1,39 @@
 .inputContainer {
   display: flex;
-  justify-content: space-between;
-  width: 350px;
   margin: 0.5rem;
   /* border: 2px solid purple; */
+  line-height: 100%;
 }
 
 .label {
-  min-width: 590px;
-  /* border: 2px solid green; */
+  min-width: 120px;
+
+  /* border: 2px solid pink; */
+}
+
+.button {
+  border: 1.5px dotted var(--primary-border);
+  background-color: var(--secondary-color-background);
+  color: var(--secondary-color-text);
+  width: 100px;
+  height: 3.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-right: 4px;
+  border-radius: 4px;
+}
+
+.formWrapper {
+  /* border: 2px solid blue; */
+}
+
+.wrapper {
+  border: 2px solid var(--primary-border);
+  border-radius: 4px;
+  width: 400px;
+  padding: 10px;
+}
+
+.input {
+  flex: 1;
 }

@@ -6,6 +6,7 @@ function MyApp({ Component, pageProps }) {
   const [userFetched, setUserFetched] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [authorized, setAuthorized] = useState(false);
+
   useEffect(() => {
     (async () => {
       const data = await fetch('/api/user');
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps }) {
       }
     })();
   }, []);
+
   return (
     <>
       {userFetched ? (
