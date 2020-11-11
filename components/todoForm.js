@@ -1,15 +1,15 @@
 import styles from '../styles/TodoForm.module.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { GrAddCircle, GrPowerCycle } from 'react-icons/gr';
+import { GrPowerCycle } from 'react-icons/gr';
 import { FaRegCalendarAlt } from 'react-icons/fa';
+import { AiOutlineDelete } from 'react-icons/ai';
 import subDays from 'date-fns/subDays';
-
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function todoForm({ setShowModal, setData }) {
-  const [assetInfo, setAssetInfo] = useState({});
-  const [title, setTitle] = useState('New Task Title');
+  const [task, setTask] = useState(null);
+  const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [step, setStep] = useState('');
   const [steps, setSteps] = useState([]);
@@ -17,40 +17,44 @@ export default function todoForm({ setShowModal, setData }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch('/api/assets', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'applicatrion/json',
-        },
-        body: JSON.stringify(assetInfo),
-      });
-      const data = await res.json();
-      setData(data.assets);
-      setShowModal(false);
-    } catch (err) {}
+    if (task) {
+      try {
+        const res = await fetch('/api/todos', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'applicatrion/json',
+          },
+          body: JSON.stringify({ ...task, startDate, steps }),
+        });
+        const data = await res.json();
+        setData(data.tasks);
+        setShowModal(false);
+      } catch (err) {}
+    }
   };
 
-  const handleAssetInfoChange = (e) => {
-    setAssetInfo({
-      ...assetInfo,
-      [e.target.name]: e.target.value,
-    });
+  const handleTaskInfoChange = (e) => {
+    setTask({ ...task, [e.target.name]: e.target.value });
+    switch (e.target.name) {
+      case 'title':
+        setTitle(e.target.value);
+        break;
+    }
   };
 
   const validate = () => {};
-  useEffect(() => {
-    setStep(null);
-  }, [steps]);
 
   return (
     <div className={styles.wrapper}>
       <form className={styles.formWrapper} onSubmit={handleSubmit}>
         <input
           className={styles.title}
+          name='title'
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          placeholder='New Task Title'
+          onChange={handleTaskInfoChange}
+          required
         />
         <section className={styles.sectionWrapper}>
           <div className={styles.inputContainer}>
@@ -75,7 +79,12 @@ export default function todoForm({ setShowModal, setData }) {
               <GrPowerCycle size='35' />
               <span>Frequency</span>
             </label>
-            <select className={styles.input} name='frequency'>
+            <select
+              className={styles.input}
+              name='frequency'
+              onChange={handleTaskInfoChange}
+            >
+              <option value='none'>None</option>
               <option value='daily'>Daily</option>
               <option value='weekly'>Weekly</option>
               <option value='monthly'>Monthly</option>
@@ -110,7 +119,7 @@ export default function todoForm({ setShowModal, setData }) {
                   }
                 }}
               >
-                Modify STEP
+                MODIFY
               </button>
             ) : (
               <button
@@ -123,34 +132,36 @@ export default function todoForm({ setShowModal, setData }) {
                   }
                 }}
               >
-                ADD STEP
+                ADD
               </button>
             )}
           </div>
-
           <div className={styles.stepsContainer}>
             {steps.map((step, index) => (
-              <div data-key={index}>
+              <div data-key={index} className={styles.stepBox}>
                 <button
                   type='button'
+                  className={styles.step}
                   onClick={(e) => {
                     setStep(steps[index]);
                     setStepIndex(index);
                   }}
                 >
-                  <div className={styles.step} data-key={index}>
-                    {step}
+                  <div data-key={index} className={styles.textStep}>
+                    Step {index + 1}: {step.slice(0, 20).trim()}...
                   </div>
                 </button>
                 <button
+                  className={styles.deleteBtn}
                   type='button'
                   onClick={(e) => {
                     const newArray = steps;
                     newArray.splice(index, 1);
                     setSteps([...newArray]);
+                    setStepIndex(-1);
                   }}
                 >
-                  Delete ME
+                  <AiOutlineDelete size='25' />
                 </button>
               </div>
             ))}

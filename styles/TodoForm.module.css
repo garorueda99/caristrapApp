@@ -25,14 +25,18 @@
 }
 
 .smallButton {
+  position: absolute;
+  left: 85%;
   border: 1.5px dotted var(--primary-border);
-  background-color: var(--primary-color-background);
-  color: var(--primary-color-text);
+  background-color: var(--secondary-color-background);
+  color: var(--secondary-color-text);
   border-radius: 4px;
-  margin-right: 4px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 60px;
+  height: 100%;
 }
 
 .smallButton:hover {
@@ -67,6 +71,10 @@
   border-radius: 5px;
 }
 
+.title:focus::placeholder {
+  color: white;
+}
+
 .input {
   max-width: 150px;
   padding: 3px 15px;
@@ -90,6 +98,8 @@
   width: 180px;
   padding: 10px;
   border-radius: 16px;
+  flex: 1;
+  overflow: hidden;
 }
 
 .stepBox {
@@ -102,4 +112,28 @@
   border: 2px solid var(--primary-border);
   margin-bottom: 1px;
   padding: 0 16px;
+}
+
+.stepsContainer {
+  margin-top: 15px;
+}
+
+.stepBox {
+  margin-bottom: 5px;
+  display: flex;
+}
+
+.deleteBtn {
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.deleteBtn:hover {
+  background-color: var(--hover-color-background);
+}
+
+.textStep {
+  text-align: left;
 }
