@@ -16,7 +16,7 @@ const columns = [
   },
   {
     Header: 'Asset',
-    accessor: 'machine',
+    accessor: 'assets',
   },
   {
     Header: 'Tag #',
@@ -24,7 +24,7 @@ const columns = [
   },
   {
     Header: 'Task',
-    accessor: 'task',
+    accessor: 'title',
     // className: 'user',
     style: {
       fontWeight: 'bolder',
@@ -33,7 +33,7 @@ const columns = [
   },
   {
     Header: 'Due  Date',
-    accessor: 'due_date',
+    accessor: 'startDate',
     style: {
       fontWeight: 'bolder',
       overflow: 'hidden',
@@ -54,14 +54,15 @@ const columns = [
   },
 ];
 
-const data = [];
-
 export default function todos() {
+  const [data, setData] = useState([]);
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerWrapper}>
-        <TodoBar />
+        <TodoBar setData={setData} />
       </div>
+      {JSON.stringify(data)}
+
       <div className={styles.gridWrapper}>
         <Table columns={columns} data={data} />
       </div>

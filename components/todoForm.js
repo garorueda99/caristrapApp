@@ -30,8 +30,11 @@ export default function todoForm({ setShowModal, setData }) {
           body: JSON.stringify({ ...task, startDate, steps }),
         });
         const data = await res.json();
-        setData(data.tasks);
+        console.log('HERE', data, data.todos);
+        setData(data.todos);
+        console.log('I was here');
         setShowModal(false);
+        console.log('I was after here');
       } catch (err) {}
     }
   };
@@ -49,7 +52,6 @@ export default function todoForm({ setShowModal, setData }) {
 
   return (
     <div className={styles.wrapper}>
-      {JSON.stringify(task)}
       {assetWindow ? (
         <AssetsList
           setAssetWindow={setAssetWindow}

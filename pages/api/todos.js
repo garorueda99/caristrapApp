@@ -1,22 +1,21 @@
 import { connectToDatabase } from '../../lib/mongodb';
-import { ObjectId } from 'mongodb';
 
 export default async (req, res) => {
   const { db } = await connectToDatabase();
-
   switch (req.method) {
     case 'POST':
       const result = await db
-        .collection('task')
+        .collection('todos')
         .insertOne(JSON.parse(req.body));
       await db
-        .collection('assets')
+        .collection('todos')
         .find()
         .toArray((err, result) => {
           if (result.length) {
             res.status(200).json({
-              assets: result,
+              todos: result,
             });
+            res.end();
           } else {
             res.status(500).json({ status: 400, message: 'Not found' });
           }

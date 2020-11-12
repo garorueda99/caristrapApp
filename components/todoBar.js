@@ -3,7 +3,7 @@ import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
 import TodoForm from './todoForm';
 
-export default function todoBar({ selectedRows, setSelectedRows, setData }) {
+export default function todoBar({ setData }) {
   const [showModal, setShowModal] = useState(false);
   return (
     <div className={styles.wrapper}>
