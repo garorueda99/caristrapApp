@@ -92,6 +92,7 @@ export default function assets() {
       })
     );
   };
+
   const [selectedRows, setSelectedRows] = useState([]);
 
   return (

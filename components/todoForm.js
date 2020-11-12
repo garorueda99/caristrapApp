@@ -6,6 +6,7 @@ import { FaRegCalendarAlt } from 'react-icons/fa';
 import { AiOutlineDelete } from 'react-icons/ai';
 import subDays from 'date-fns/subDays';
 import 'react-datepicker/dist/react-datepicker.css';
+import AssetsList from '../components/assetsList';
 
 export default function todoForm({ setShowModal, setData }) {
   const [task, setTask] = useState(null);
@@ -14,6 +15,7 @@ export default function todoForm({ setShowModal, setData }) {
   const [step, setStep] = useState('');
   const [steps, setSteps] = useState([]);
   const [stepIndex, setStepIndex] = useState(-1);
+  const [assetWindow, setAssetWindow] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,129 +49,157 @@ export default function todoForm({ setShowModal, setData }) {
 
   return (
     <div className={styles.wrapper}>
-      <form className={styles.formWrapper} onSubmit={handleSubmit}>
-        <input
-          className={styles.title}
-          name='title'
-          value={title}
-          placeholder='New Task Title'
-          onChange={handleTaskInfoChange}
-          required
+      {JSON.stringify(task)}
+      {assetWindow ? (
+        <AssetsList
+          setAssetWindow={setAssetWindow}
+          title={title}
+          setTask={setTask}
+          task={task}
         />
-        <section className={styles.sectionWrapper}>
-          <div className={styles.inputContainer}>
-            <label htmlFor='due_date' className={styles.label}>
-              <FaRegCalendarAlt size='35' />
-              Start
-            </label>
-            <DatePicker
-              name='due_date'
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              minDate={subDays(new Date(), 0)}
-              className={styles.input}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label
-              className={styles.label}
-              htmlFor='frequency'
-              className={styles.label}
-            >
-              <GrPowerCycle size='35' />
-              <span>Frequency</span>
-            </label>
-            <select
-              className={styles.input}
-              name='frequency'
-              onChange={handleTaskInfoChange}
-            >
-              <option value='none'>None</option>
-              <option value='daily'>Daily</option>
-              <option value='weekly'>Weekly</option>
-              <option value='monthly'>Monthly</option>
-              <option value='biMonthly'>Bi-Monthly</option>
-              <option value='quarterly'>Quarterly</option>
-              <option value='semiAnnual'>Semi Annual</option>
-              <option value='Annual'>Annual</option>
-            </select>
-          </div>
-        </section>
-        <section className={styles.sectionWrapper}>
-          <h2>Steps {steps.length === 0 ? '' : `(${steps.length})`}:</h2>
-          <div className={styles.stepBox}>
-            <textarea
-              rows='5'
-              value={step}
-              onChange={(e) => {
-                setStep(e.target.value);
+      ) : (
+        <form className={styles.formWrapper} onSubmit={handleSubmit}>
+          <input
+            className={styles.title}
+            name='title'
+            value={title}
+            placeholder='New Task Title'
+            onChange={handleTaskInfoChange}
+            required
+          />
+          <section className={styles.sectionWrapper}>
+            <button
+              type='button'
+              onClick={() => {
+                setAssetWindow(true);
               }}
-            />
-            {stepIndex >= 0 ? (
-              <button
-                type='button'
-                className={styles.smallButton}
-                onClick={() => {
-                  if (step.length > 0) {
-                    const newArray = steps;
-                    newArray.splice(stepIndex, 1, step);
-                    setSteps([...newArray]);
-                    setStep('');
-                    setStepIndex(-1);
-                  }
+            >
+              ASSETS
+            </button>
+            <div className={styles.inputContainer}>
+              <label htmlFor='due_date' className={styles.label}>
+                <FaRegCalendarAlt size='35' />
+                Start
+              </label>
+              <DatePicker
+                name='due_date'
+                selected={startDate}
+                onChange={(date) => {
+                  setStartDate(date);
+                  setTask({ ...task, startDate });
                 }}
+                minDate={subDays(new Date(), 0)}
+                className={styles.input}
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <label
+                className={styles.label}
+                htmlFor='frequency'
+                className={styles.label}
               >
-                MODIFY
-              </button>
-            ) : (
-              <button
-                type='button'
-                className={styles.smallButton}
-                onClick={() => {
-                  if (step.length > 0) {
-                    setSteps([...steps, step]);
-                    setStep('');
-                  }
+                <GrPowerCycle size='35' />
+                <span>Frequency</span>
+              </label>
+              <select
+                className={styles.input}
+                name='frequency'
+                onChange={handleTaskInfoChange}
+              >
+                <option value='none'>None</option>
+                <option value='daily'>Daily</option>
+                <option value='weekly'>Weekly</option>
+                <option value='monthly'>Monthly</option>
+                <option value='biMonthly'>Bi-Monthly</option>
+                <option value='quarterly'>Quarterly</option>
+                <option value='semiAnnual'>Semi Annual</option>
+                <option value='Annual'>Annual</option>
+              </select>
+            </div>
+          </section>
+          <section className={styles.sectionWrapper}>
+            <h2>Steps {steps.length === 0 ? '' : `(${steps.length})`}:</h2>
+            <div className={styles.stepBox}>
+              <textarea
+                rows='5'
+                value={step}
+                onChange={(e) => {
+                  setStep(e.target.value);
                 }}
-              >
-                ADD
-              </button>
-            )}
-          </div>
-          <div className={styles.stepsContainer}>
-            {steps.map((step, index) => (
-              <div data-key={index} className={styles.stepBox}>
+              />
+              {stepIndex >= 0 ? (
                 <button
                   type='button'
-                  className={styles.step}
-                  onClick={(e) => {
-                    setStep(steps[index]);
-                    setStepIndex(index);
+                  className={styles.smallButton}
+                  onClick={() => {
+                    if (step.length > 0) {
+                      const newArray = steps;
+                      newArray.splice(stepIndex, 1, step);
+                      setSteps([...newArray]);
+                      setStep('');
+                      setStepIndex(-1);
+                    }
                   }}
                 >
-                  <div data-key={index} className={styles.textStep}>
-                    Step {index + 1}: {step.slice(0, 20).trim()}...
-                  </div>
+                  MODIFY
                 </button>
+              ) : (
                 <button
-                  className={styles.deleteBtn}
                   type='button'
-                  onClick={(e) => {
-                    const newArray = steps;
-                    newArray.splice(index, 1);
-                    setSteps([...newArray]);
-                    setStepIndex(-1);
+                  className={styles.smallButton}
+                  onClick={() => {
+                    if (step.length > 0) {
+                      setSteps([...steps, step]);
+                      setStep('');
+                    }
                   }}
                 >
-                  <AiOutlineDelete size='25' />
+                  ADD
                 </button>
-              </div>
-            ))}
-          </div>
-        </section>
+              )}
+            </div>
+            <div className={styles.stepsContainer}>
+              {steps.map((step, index) => (
+                <div data-key={index} className={styles.stepBox}>
+                  <button
+                    type='button'
+                    className={styles.step}
+                    onClick={(e) => {
+                      setStep(steps[index]);
+                      setStepIndex(index);
+                    }}
+                  >
+                    <div data-key={index} className={styles.textStep}>
+                      Step {index + 1}: {step.slice(0, 20).trim()}...
+                    </div>
+                  </button>
+                  <button
+                    className={styles.deleteBtn}
+                    type='button'
+                    onClick={(e) => {
+                      const newArray = steps;
+                      newArray.splice(index, 1);
+                      setSteps([...newArray]);
+                      setStepIndex(-1);
+                    }}
+                  >
+                    <AiOutlineDelete size='25' />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        <button className={styles.button}>SAVE</button>
-      </form>
+          <button
+            className={styles.button}
+            onSubmit={() => {
+              setTask({ ...task, startDate, steps });
+            }}
+          >
+            SAVE
+          </button>
+        </form>
+      )}
     </div>
   );
 }
