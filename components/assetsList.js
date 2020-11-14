@@ -30,12 +30,15 @@ export default function assetsList({ setAssetWindow, title, setTask, task }) {
                   if (task.assets) {
                     setTask({
                       ...task,
-                      ['assets']: [...task['assets'], data[index]['_id']],
+                      ['assets']: [
+                        ...task['assets'],
+                        { [data[index]['_id']]: false },
+                      ],
                     });
                   } else {
                     setTask({
                       ...task,
-                      ['assets']: [data[index]['_id']],
+                      ['assets']: [{ [data[index]['_id']]: false }],
                     });
                   }
                 } else {

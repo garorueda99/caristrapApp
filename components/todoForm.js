@@ -30,11 +30,8 @@ export default function todoForm({ setShowModal, setData }) {
           body: JSON.stringify({ ...task, startDate, steps }),
         });
         const data = await res.json();
-        console.log('HERE', data, data.todos);
-        setData(data.todos);
-        console.log('I was here');
+        setData(list);
         setShowModal(false);
-        console.log('I was after here');
       } catch (err) {}
     }
   };
@@ -195,7 +192,7 @@ export default function todoForm({ setShowModal, setData }) {
           <button
             className={styles.button}
             onSubmit={() => {
-              setTask({ ...task, startDate, steps });
+              setTask({ ...task, startDate, steps, status: open });
             }}
           >
             SAVE

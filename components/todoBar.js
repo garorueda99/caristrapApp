@@ -3,7 +3,7 @@ import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
 import TodoForm from './todoForm';
 
-export default function todoBar({ setData }) {
+export default function todoBar({ selectedRows, setSelectedRows, setData }) {
   const [showModal, setShowModal] = useState(false);
   return (
     <div className={styles.wrapper}>
@@ -31,7 +31,7 @@ export default function todoBar({ setData }) {
             e.preventDefault();
             if (selectedRows.length > 0) {
               try {
-                const res = await fetch('/api/assets', {
+                const res = await fetch('/api/todos', {
                   method: 'DELETE',
                   headers: {
                     Accept: 'application/json',
@@ -41,7 +41,8 @@ export default function todoBar({ setData }) {
                 });
                 setSelectedRows([]);
                 const data = await res.json();
-                setData(data.assets);
+                console.log('HI', data.todos);
+                setData(data);
               } catch (err) {}
             }
           }}

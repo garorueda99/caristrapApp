@@ -24,3 +24,11 @@ export default async (req, res) => {
       }
     });
 };
+
+b.map((element) =>
+  newList.push({
+    ...element,
+    machine_name: a.find((x) => x['_id'] === element.machine_name).machine_name,
+    tag: a.find((x) => x['_id'] === element.machine_name).tag,
+  })
+);

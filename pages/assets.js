@@ -64,8 +64,8 @@ export default function assets() {
   // if (error) return <h1>Something went wrong!</h1>;
   // if (!result) return <h1>Loading...</h1>;
 
-  const [data, setData] = React.useState([]);
-  const [skipPageReset, setSkipPageReset] = React.useState(false);
+  const [data, setData] = useState([]);
+  const [skipPageReset, setSkipPageReset] = useState(false);
 
   useEffect(async () => {
     try {
