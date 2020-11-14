@@ -94,7 +94,6 @@ export default function todos() {
 
   return (
     <div className={styles.mainContainer}>
-      {JSON.stringify(data)}
       <div className={styles.headerWrapper}>
         <TodoBar
           selectedRows={selectedRows}

@@ -1,81 +1,33 @@
 'use strict';
 import { connectToDatabase } from '../../lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { todosList } from '../../lib/mongolib';
 
 export default async (req, res) => {
   const { db } = await connectToDatabase();
-
-  const assets = async () => {
-    const { db } = await connectToDatabase();
-    return await db
-      .collection('assets')
-      .aggregate([
-        {
-          $project: {
-            _id: 1,
-            machine_name: 1,
-            tag: 1,
-          },
-        },
-      ])
-      .toArray();
-  };
-
-  // const update = async (data) => {
-  //   myResponse = await data;
-  // };
-
-  const globalInfo = await assets();
-
   switch (req.method) {
     case 'DELETE':
-      await db.collection('todos').deleteMany({
-        _id: {
-          $in: JSON.parse(req.body)['_ids'].map((d) => new ObjectId(d)),
-        },
-      });
-      await db
-        .collection('todos')
-        .find()
-        .toArray((err, result) => {
-          if (result.length) {
-            res.status(200).json({
-              todos: result,
-            });
-          } else {
-            res.status(500).json({ status: 400, message: 'Not found' });
-          }
-        });
+      // await db.collection('todos').deleteMany({
+      //   _id: {
+      //     $in: JSON.parse(req.body)['_ids'].map((d) => new ObjectId(d)),
+      //   },
+      // });
+      // await db
+      //   .collection('todos')
+      //   .find()
+      //   .toArray((err, result) => {
+      //     if (result.length) {
+      //       res.status(200).json({
+      //         todos: result,
+      //       });
+      //     } else {
+      //       res.status(500).json({ status: 400, message: 'Not found' });
+      //     }
+      //   });
       break;
     case 'GET':
-      await db
-        .collection('todos')
-        .find()
-        .toArray((err, result) => {
-          if (result.length) {
-            const list = [];
-            result.map((x) =>
-              x.assets.map(async (y) => {
-                list.push({
-                  title: x.title,
-                  assetId: Object.keys(y)[0],
-                  startDate: x.startDate,
-                  machine_name: 'unknown',
-                  frequency: x.frequency || 'none',
-                  status: y[Object.keys(y)[0]],
-                });
-                // console.log('LIST', list);
-              })
-            );
-            res.status(200).json({ todos: list });
-          } else {
-            res.status(200).json({ todos: [] });
-          }
-        });
-
-      // const res2 = await fetch('/api/assets/name');
-      // const assets = await res2.json();
-      // console.log('DATA', data, assets);
+      const todos = await todosList();
+      res.status(200).json({ todos });
 
       break;
     case 'POST':
