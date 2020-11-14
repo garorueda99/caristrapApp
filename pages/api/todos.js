@@ -1,24 +1,31 @@
 'use strict';
 import { connectToDatabase } from '../../lib/mongodb';
 import { ObjectId } from 'mongodb';
-import assetsList from '../../components/assetsList';
 
 export default async (req, res) => {
   const { db } = await connectToDatabase();
 
-  // const assets = async () => {
-  //   await db
-  //     .collection('assets')
-  //     .find()
-  //     .toArray(async (err, assets) => {
-  //       // console.log('F', assets);
-  //       const response = await assets;
-  //       return await response;
-  //     });
+  const assets = async () => {
+    const { db } = await connectToDatabase();
+    return await db
+      .collection('assets')
+      .aggregate([
+        {
+          $project: {
+            _id: 1,
+            machine_name: 1,
+            tag: 1,
+          },
+        },
+      ])
+      .toArray();
+  };
+
+  // const update = async (data) => {
+  //   myResponse = await data;
   // };
 
-  // const assetList = await assets();
-  // console.log('HERE====>', assetList);
+  const globalInfo = await assets();
 
   switch (req.method) {
     case 'DELETE':
