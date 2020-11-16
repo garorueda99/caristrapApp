@@ -30,7 +30,7 @@ export default function todoForm({ setShowModal, setData }) {
           body: JSON.stringify({ ...task, startDate, steps }),
         });
         const data = await res.json();
-        setData(list);
+        setData(data.todos);
         setShowModal(false);
       } catch (err) {}
     }

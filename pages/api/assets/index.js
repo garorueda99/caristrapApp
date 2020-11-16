@@ -9,23 +9,22 @@ import { ObjectId } from 'mongodb';
 
 export default async (req, res) => {
   const { db } = await connectToDatabase();
-
+  let assets = [];
   switch (req.method) {
     case 'DELETE':
-      await deleteValidation(
-        JSON.parse(req.body)['_ids'].map((d) => new ObjectId(d))
-      );
       await deleteAssets(
         JSON.parse(req.body)['_ids'].map((d) => new ObjectId(d))
       );
+      assets = await fullAssetsList();
+      res.status(200).json({ assets });
       break;
     case 'POST':
       await postAsset(JSON.parse(req.body));
-      const newAssets = await fullAssetsList();
-      res.status(200).json({ newAssets });
+      assets = await fullAssetsList();
+      res.status(200).json({ assets });
       break;
     case 'GET':
-      const assets = await fullAssetsList();
+      assets = await fullAssetsList();
       res.status(200).json({ assets });
       break;
     default:

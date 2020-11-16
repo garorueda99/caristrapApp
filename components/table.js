@@ -58,6 +58,7 @@ export default function Table({
   data,
   updateMyData,
   skipPageReset,
+  selectedRows,
   setSelectedRows,
   getHeaderProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
@@ -126,6 +127,9 @@ export default function Table({
     selectedFlatRows.length > 0 &&
       setSelectedRows(selectedFlatRows.map((d) => d.original['_id']));
   }, [selectedFlatRows.length]);
+
+  useEffect(() => {}, [selectedRows]);
+
   return (
     <Styles>
       <table {...getTableProps()}>
@@ -169,7 +173,6 @@ export default function Table({
                       {cell.render('Cell')}
                     </td>
                   );
-                  <td>Me HERE</td>;
                 })}
               </tr>
             );

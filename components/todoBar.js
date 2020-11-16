@@ -7,15 +7,6 @@ export default function todoBar({ selectedRows, setSelectedRows, setData }) {
   const [showModal, setShowModal] = useState(false);
   return (
     <div className={styles.wrapper}>
-      {/* <label className="rocker rocker-small"/> */}
-      <div>
-        {/* <label className={styles.rocker}>
-          <input type='checkbox' />
-          <span className={styles.switch_left}>Yes</span>
-          <span className={styles.switch_right}>No</span>
-        </label> */}
-      </div>
-
       <div>
         <button
           className={styles.button}
@@ -41,7 +32,6 @@ export default function todoBar({ selectedRows, setSelectedRows, setData }) {
                 });
                 setSelectedRows([]);
                 const data = await res.json();
-                console.log('HI', data.todos);
                 setData(data);
               } catch (err) {}
             }

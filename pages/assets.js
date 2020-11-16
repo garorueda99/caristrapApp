@@ -68,13 +68,9 @@ export default function assets() {
   const [skipPageReset, setSkipPageReset] = useState(false);
 
   useEffect(async () => {
-    try {
-      const res = await fetch('/api/assets');
-      const data = await res.json();
-      setData(data.assets);
-    } catch (err) {
-      console.log('ERROR:', err);
-    }
+    const res = await fetch('/api/assets');
+    const data = await res.json();
+    setData(data.assets);
   }, []);
 
   const updateMyData = (rowIndex, columnId, value) => {
@@ -111,6 +107,7 @@ export default function assets() {
           updateMyData={updateMyData}
           skipPageReset={skipPageReset}
           setSelectedRows={setSelectedRows}
+          selectedRows={selectedRows}
         />
       </div>
     </div>

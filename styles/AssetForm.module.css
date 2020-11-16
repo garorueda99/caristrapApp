@@ -37,3 +37,17 @@
 .input {
   flex: 1;
 }
+
+.textWrapper {
+  padding: 15px 0;
+  margin-bottom: 30px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+
+.title h2 {
+  margin-left: 15px;
+}
