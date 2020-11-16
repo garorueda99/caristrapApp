@@ -1,6 +1,6 @@
 'use strict';
 import { connectToDatabase } from '../../lib/mongodb';
-import { ObjectId } from 'mongodb';
+
 import { todosList } from '../../lib/mongolib';
 
 export default async (req, res) => {
@@ -28,7 +28,6 @@ export default async (req, res) => {
     case 'GET':
       const todos = await todosList();
       res.status(200).json({ todos });
-
       break;
     case 'POST':
       const result = await db

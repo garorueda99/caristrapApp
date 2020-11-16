@@ -6,7 +6,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: var(--primary-color-background);
-  font-family: Roboto;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
 a {

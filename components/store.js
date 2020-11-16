@@ -12,7 +12,6 @@ const Store = ({ children, userInfo, authorized }) => {
   const [user, setUser] = useState(userInfo);
   const [loggedIn, setLoggedIn] = useState(false);
   const [magic, setMagic] = useState();
-
   useEffect(() => {
     (async () => {
       /*loads Magic as variable*/
@@ -31,7 +30,13 @@ const Store = ({ children, userInfo, authorized }) => {
       <MagicContext.Provider value={[magic]}>
         <UserContext.Provider value={[user, setUser]}>
           <Layout>
-            <>{children}</>
+            <>
+              {/* {navigator.onLine ? ( */}
+              {children}
+              {/* ) : ( */}
+              {/* <div>INTERNET CONNECTION LOST</div> */}
+              {/* )} */}
+            </>
           </Layout>
         </UserContext.Provider>
       </MagicContext.Provider>
