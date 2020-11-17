@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TodoBar from '../components/todoBar';
 import Table from '../components/table';
+import Cards from '../components/cards';
 import styles from '../styles/Pages.module.css';
 import { formattedList } from '../lib/utils';
 const columns = [
@@ -58,7 +59,7 @@ export default function todos() {
   const [data, setData] = useState([]);
   const [skipPageReset, setSkipPageReset] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
-
+  const [view, setView] = useState('table');
   useEffect(() => {
     try {
       (async () => {
@@ -94,16 +95,25 @@ export default function todos() {
           selectedRows={selectedRows}
           setSelectedRows={setSelectedRows}
           setData={setData}
+          setView={setView}
         />
       </div>
+
       <div className={styles.gridWrapper}>
-        <Table
-          columns={columns}
-          data={data}
-          setSelectedRows={setSelectedRows}
-          updateMyData={updateMyData}
-          skipPageReset={skipPageReset}
-        />
+        {view === 'table' && (
+          <Table
+            columns={columns}
+            data={data}
+            setSelectedRows={setSelectedRows}
+            updateMyData={updateMyData}
+            skipPageReset={skipPageReset}
+          />
+        )}
+        {view === 'cards' && (
+          <div className={styles.cardsWrapper}>
+            <Cards />
+          </div>
+        )}
       </div>
     </div>
   );

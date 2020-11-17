@@ -1,9 +1,7 @@
 'use strict';
-import { connectToDatabase } from '../../lib/mongodb';
-import { todosList, saveTodo, deleteTodos } from '../../lib/mongolib';
+import { todosList, saveTodo, deleteTodos } from '../../../lib/mongolib';
 
 export default async (req, res) => {
-  const { db } = await connectToDatabase();
   let todos = [];
   switch (req.method) {
     case 'DELETE':
@@ -11,7 +9,6 @@ export default async (req, res) => {
       todos = await todosList();
       break;
     case 'GET':
-      todos = await todosList();
       break;
     case 'POST':
       await saveTodo(JSON.parse(req.body));

@@ -18,3 +18,11 @@
   padding: 16px;
   max-width: 100%;
 }
+
+.cardsWrapper {
+  background-color: var(--card-color-background);
+  box-shadow: 0px 0px 3px 0px var(--primary-border);
+  border-radius: 4px;
+  /* border: 2px solid blue; */
+  padding: 30px 20px 10px 20px;
+}
