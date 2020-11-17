@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import TodoBar from '../components/todoBar';
 import Table from '../components/table';
 import styles from '../styles/Pages.module.css';
-
+import { formattedList } from '../lib/utils';
 const columns = [
   {
     Header: 'id',
@@ -58,19 +58,14 @@ export default function todos() {
   const [data, setData] = useState([]);
   const [skipPageReset, setSkipPageReset] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
-  useEffect(async () => {
+
+  useEffect(() => {
     try {
-      const res = await fetch('/api/todos');
-      const data = await res.json();
-      const formattedList = [];
-      data.todos.forEach((element) => {
-        const date = new Date(element.startDate);
-        formattedList.push({
-          ...element,
-          startDate: new Intl.DateTimeFormat('en-US').format(date),
-        });
-      });
-      setData(formattedList);
+      (async () => {
+        const res = await fetch('/api/todos');
+        const data = await res.json();
+        setData(formattedList(data));
+      })();
     } catch (err) {
       console.log('ERROR:', err);
     }
@@ -101,7 +96,6 @@ export default function todos() {
           setData={setData}
         />
       </div>
-
       <div className={styles.gridWrapper}>
         <Table
           columns={columns}

@@ -7,6 +7,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import subDays from 'date-fns/subDays';
 import 'react-datepicker/dist/react-datepicker.css';
 import AssetsList from '../components/assetsList';
+import { formattedList } from '../lib/utils';
 
 export default function todoForm({ setShowModal, setData }) {
   const [task, setTask] = useState(null);
@@ -30,7 +31,7 @@ export default function todoForm({ setShowModal, setData }) {
           body: JSON.stringify({ ...task, startDate, steps }),
         });
         const data = await res.json();
-        setData(data.todos);
+        setData(formattedList(data));
         setShowModal(false);
       } catch (err) {}
     }

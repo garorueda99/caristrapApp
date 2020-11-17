@@ -30,28 +30,29 @@ export default function assetsList({ setAssetWindow, title, setTask, task }) {
                   if (task.assets) {
                     setTask({
                       ...task,
-                      ['assets']: [
+                      ['assets']: {
                         ...task['assets'],
-                        { [data[index]['_id']]: false },
-                      ],
+                        [data[index]['_id']]: false,
+                      },
                     });
                   } else {
                     setTask({
                       ...task,
-                      ['assets']: [{ [data[index]['_id']]: false }],
+                      ['assets']: { [data[index]['_id']]: false },
                     });
                   }
                 } else {
-                  if (task['assets'].length === 1) {
-                    setTask(initialState);
-                  } else {
-                    setTask({
-                      ...task,
-                      ['assets']: task['assets'].filter(
-                        (element) => element !== data[index]['_id']
-                      ),
-                    });
-                  }
+                  console.log("why I'm here");
+                  // if (Object.keys(task['assets']).length === 0) {
+                  //   setTask(initialState);
+                  // } else {
+                  //   setTask({
+                  //     ...task,
+                  //     ['assets']: task['assets'].filter(
+                  //       (element) => element !== data[index]['_id']
+                  //     ),
+                  //   });
+                  // }
                 }
               }}
             />

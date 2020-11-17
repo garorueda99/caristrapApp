@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
 import TodoForm from './todoForm';
+import { formattedList } from '../lib/utils';
 
 export default function todoBar({ selectedRows, setSelectedRows, setData }) {
   const [showModal, setShowModal] = useState(false);
@@ -18,8 +19,7 @@ export default function todoBar({ selectedRows, setSelectedRows, setData }) {
         </button>
         <button
           className={styles.button}
-          onClick={async (e) => {
-            e.preventDefault();
+          onClick={async () => {
             if (selectedRows.length > 0) {
               try {
                 const res = await fetch('/api/todos', {
@@ -32,7 +32,7 @@ export default function todoBar({ selectedRows, setSelectedRows, setData }) {
                 });
                 setSelectedRows([]);
                 const data = await res.json();
-                setData(data);
+                setData(formattedList(data));
               } catch (err) {}
             }
           }}

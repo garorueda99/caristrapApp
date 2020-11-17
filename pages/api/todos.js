@@ -1,42 +1,26 @@
 'use strict';
 import { connectToDatabase } from '../../lib/mongodb';
-import { todosList, saveTodo } from '../../lib/mongolib';
+import { todosList, saveTodo, deleteTodos } from '../../lib/mongolib';
 
 export default async (req, res) => {
   const { db } = await connectToDatabase();
   let todos = [];
   switch (req.method) {
     case 'DELETE':
-      // await db.collection('todos').deleteMany({
-      //   _id: {
-      //     $in: JSON.parse(req.body)['_ids'].map((d) => new ObjectId(d)),
-      //   },
-      // });
-      // await db
-      //   .collection('todos')
-      //   .find()
-      //   .toArray((err, result) => {
-      //     if (result.length) {
-      //       res.status(200).json({
-      //         todos: result,
-      //       });
-      //     } else {
-      //       res.status(500).json({ status: 400, message: 'Not found' });
-      //     }
-      //   });
+      await deleteTodos(JSON.parse(req.body));
+      todos = await todosList();
       break;
     case 'GET':
       todos = await todosList();
-      res.status(200).json({ todos });
       break;
     case 'POST':
       await saveTodo(JSON.parse(req.body));
-      todos = await todosList();
-      res.status(200).json({ todos });
       break;
     default:
       return res
         .status(405)
         .json({ message: 'This route only accepts POST requests' });
   }
+  todos = await todosList();
+  res.status(200).json({ todos });
 };
