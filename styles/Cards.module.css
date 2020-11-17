@@ -1,0 +1,10 @@
+.mainWrapper {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30px;
+  height: 400px;
+  overflow-y: auto;
+}

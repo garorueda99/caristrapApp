@@ -1,5 +1,5 @@
 import styles from '../styles/TodoForm.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import { GrPowerCycle } from 'react-icons/gr';
 import { FaRegCalendarAlt } from 'react-icons/fa';
@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import AssetsList from '../components/assetsList';
 import { formattedList } from '../lib/utils';
 
-export default function todoForm({ setShowModal, setData }) {
+export default function todoForm({ setShowModal, setData, todoPointer }) {
   const [task, setTask] = useState(null);
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState(new Date());
@@ -17,6 +17,7 @@ export default function todoForm({ setShowModal, setData }) {
   const [steps, setSteps] = useState([]);
   const [stepIndex, setStepIndex] = useState(-1);
   const [assetWindow, setAssetWindow] = useState(false);
+  const [assetsList, setAssetsList] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ export default function todoForm({ setShowModal, setData }) {
             Accept: 'application/json',
             'Content-Type': 'applicatrion/json',
           },
-          body: JSON.stringify({ ...task, startDate, steps }),
+          body: JSON.stringify({ ...task }),
         });
         const data = await res.json();
         setData(formattedList(data));
@@ -48,14 +49,24 @@ export default function todoForm({ setShowModal, setData }) {
 
   const validate = () => {};
 
+  useEffect(() => {
+    if (todoPointer) {
+      console.log(todoPointer);
+      setTitle(todoPointer.title);
+      // setStartDate(todoPointer.startDate);
+      setSteps(todoPointer.steps);
+      setAssetsList(todoPointer.assets);
+    }
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       {assetWindow ? (
         <AssetsList
           setAssetWindow={setAssetWindow}
           title={title}
-          setTask={setTask}
-          task={task}
+          assetsList={assetsList}
+          setAssetsList={setAssetsList}
         />
       ) : (
         <form className={styles.formWrapper} onSubmit={handleSubmit}>
@@ -193,7 +204,13 @@ export default function todoForm({ setShowModal, setData }) {
           <button
             className={styles.button}
             onSubmit={() => {
-              setTask({ ...task, startDate, steps, status: open });
+              setTask({
+                ...task,
+                startDate,
+                steps,
+                status: open,
+                assets: assetsList,
+              });
             }}
           >
             SAVE

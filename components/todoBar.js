@@ -11,6 +11,7 @@ export default function todoBar({
   setView,
 }) {
   const [showModal, setShowModal] = useState(false);
+  const [todoPointer, setTodoPointer] = useState(null);
   return (
     <div className={styles.wrapper}>
       <fieldset
@@ -69,7 +70,7 @@ export default function todoBar({
         <button className={styles.button}>EXPORT</button>
       </div>
       {showModal && (
-        <Modal setShowModal={setShowModal}>
+        <Modal setShowModal={setShowModal} setData={setTodoPointer}>
           <TodoForm setShowModal={setShowModal} setData={setData} />
         </Modal>
       )}

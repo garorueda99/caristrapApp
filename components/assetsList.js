@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 
-export default function assetsList({ setAssetWindow, title, setTask, task }) {
+export default function assetsList({
+  setAssetWindow,
+  title,
+  assetsList,
+  setAssetsList,
+}) {
   const [data, setData] = useState([]);
   const [initialState, setInitialState] = useState({});
 
   useEffect(async () => {
-    setInitialState(task);
     try {
       const res = await fetch('/api/assets/name');
       const data = await res.json();
@@ -20,43 +24,22 @@ export default function assetsList({ setAssetWindow, title, setTask, task }) {
       <h2>Select Assest for {title}</h2>
       <div>
         {data.map((element, index) => (
-          <div>
+          <div key={`asset-${index}`}>
             <input
               type='checkbox'
-              name={index}
-              id={index}
+              name={element._id}
+              id={element._id}
+              checked={element._id in assetsList}
               onChange={(e) => {
                 if (e.target.checked) {
-                  if (task.assets) {
-                    setTask({
-                      ...task,
-                      ['assets']: {
-                        ...task['assets'],
-                        [data[index]['_id']]: false,
-                      },
-                    });
-                  } else {
-                    setTask({
-                      ...task,
-                      ['assets']: { [data[index]['_id']]: false },
-                    });
-                  }
+                  setAssetsList({ ...assetsList, [e.target.name]: false });
                 } else {
-                  console.log("why I'm here");
-                  // if (Object.keys(task['assets']).length === 0) {
-                  //   setTask(initialState);
-                  // } else {
-                  //   setTask({
-                  //     ...task,
-                  //     ['assets']: task['assets'].filter(
-                  //       (element) => element !== data[index]['_id']
-                  //     ),
-                  //   });
-                  // }
+                  delete assetsList[e.target.name];
+                  setAssetsList({ ...assetsList });
                 }
               }}
             />
-            <label htmlFor={index}>
+            <label htmlFor={element._id}>
               {element.machine_name}-{element.tag}
             </label>
           </div>

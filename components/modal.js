@@ -1,5 +1,5 @@
 import styles from '../styles/NewAsset.module.css';
-export default function newAsset({ children, setShowModal }) {
+export default function newAsset({ children, setShowModal, setData }) {
   return (
     <>
       <div className={styles.wrapper}>
@@ -9,6 +9,7 @@ export default function newAsset({ children, setShowModal }) {
             className={styles.close}
             onClick={() => {
               setShowModal(false);
+              setData(null);
             }}
           >
             &times;

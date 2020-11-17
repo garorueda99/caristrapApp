@@ -1,8 +1,9 @@
 .mainContainer {
   display: flex;
+  flex: 1;
   height: 100%;
   flex-direction: column;
-  /* border: 2px solid green; */
+  border: 2px solid green;
 }
 
 .headerWrapper {
@@ -17,6 +18,7 @@
   /* display: flex; */
   padding: 16px;
   max-width: 100%;
+  border: 2px solid pink;
 }
 
 .cardsWrapper {
