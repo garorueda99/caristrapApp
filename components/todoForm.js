@@ -41,21 +41,39 @@ export default function todoForm({
           console.log('ERROR:', err);
         }
       } else if (view === 'cards') {
-        try {
-          const res = await fetch('/api/todos/cards', {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'applicatrion/json',
-            },
-            body: JSON.stringify({ ...task }),
-          });
-          const data = await res.json();
-          console.log('====>', data);
-          setData(data);
-          setShowModal(false);
-        } catch (err) {
-          console.log('ERROR:', err);
+        if (todoPointer) {
+          try {
+            const res = await fetch('/api/todos/cards', {
+              method: 'PUT',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'applicatrion/json',
+              },
+              body: JSON.stringify({ ...task }),
+            });
+            const data = await res.json();
+            console.log('====>', data);
+            setData(data);
+            setShowModal(false);
+          } catch (err) {
+            console.log('ERROR:', err);
+          }
+        } else {
+          try {
+            const res = await fetch('/api/todos/cards', {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'applicatrion/json',
+              },
+              body: JSON.stringify({ ...task }),
+            });
+            const data = await res.json();
+            setData(data);
+            setShowModal(false);
+          } catch (err) {
+            console.log('ERROR:', err);
+          }
         }
       }
     }

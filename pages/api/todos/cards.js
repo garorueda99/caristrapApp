@@ -1,6 +1,6 @@
 'use strict';
 import { connectToDatabase } from '../../../lib/mongodb';
-import { saveTodo, deleteTodo } from '../../../lib/mongolib';
+import { saveTodo, deleteTodo, replaceTodo } from '../../../lib/mongolib';
 
 export default async (req, res) => {
   const { db } = await connectToDatabase();
@@ -10,6 +10,9 @@ export default async (req, res) => {
       break;
     case 'POST':
       await saveTodo(JSON.parse(req.body));
+      break;
+    case 'PUT':
+      await replaceTodo(JSON.parse(req.body));
       break;
     case 'DELETE':
       await deleteTodo(JSON.parse(req.body));
