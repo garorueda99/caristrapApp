@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 
-export default function assetsList({
-  setAssetWindow,
-  title,
-  assetsList,
-  setAssetsList,
-}) {
+export default function assetsList({ setAssetWindow, task, setTask }) {
+  const removeAssetsKey = () => {
+    const newTask = { ...task };
+    delete newTask.assets;
+    setTask({ ...newTask });
+  };
   const [data, setData] = useState([]);
-  const [initialState, setInitialState] = useState({});
-
   useEffect(async () => {
     try {
       const res = await fetch('/api/assets/name');
@@ -21,7 +19,8 @@ export default function assetsList({
 
   return (
     <div>
-      <h2>Select Assest for {title}</h2>
+      <h2>Select Assest for {task.title}</h2>
+      {/* {JSON.stringify(task.assets)} */}
       <div>
         {data.map((element, index) => (
           <div key={`asset-${index}`}>
@@ -29,13 +28,24 @@ export default function assetsList({
               type='checkbox'
               name={element._id}
               id={element._id}
-              checked={element._id in assetsList}
+              checked={task.assets ? element._id in task.assets : false}
               onChange={(e) => {
                 if (e.target.checked) {
-                  setAssetsList({ ...assetsList, [e.target.name]: false });
+                  task.assets
+                    ? setTask({
+                        ...task,
+                        assets: { ...task.assets, [e.target.name]: false },
+                      })
+                    : setTask({
+                        ...task,
+                        assets: { [e.target.name]: false },
+                      });
                 } else {
-                  delete assetsList[e.target.name];
-                  setAssetsList({ ...assetsList });
+                  const newAssetsList = { ...task.assets };
+                  delete newAssetsList[e.target.name];
+                  Object.keys(newAssetsList).length > 0
+                    ? setTask({ ...task, assets: { ...newAssetsList } })
+                    : removeAssetsKey();
                 }
               }}
             />

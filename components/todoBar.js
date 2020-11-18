@@ -2,13 +2,14 @@ import { useState } from 'react';
 import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
 import TodoForm from './todoForm';
-import { formattedList } from '../lib/utils';
+import { formatList } from '../lib/utils';
 
 export default function todoBar({
   selectedRows,
   setSelectedRows,
   setData,
   setView,
+  view,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [todoPointer, setTodoPointer] = useState(null);
@@ -59,7 +60,7 @@ export default function todoBar({
                 });
                 setSelectedRows([]);
                 const data = await res.json();
-                setData(formattedList(data));
+                setData(formatList(data));
               } catch (err) {}
             }
           }}
@@ -71,7 +72,7 @@ export default function todoBar({
       </div>
       {showModal && (
         <Modal setShowModal={setShowModal} setData={setTodoPointer}>
-          <TodoForm setShowModal={setShowModal} setData={setData} />
+          <TodoForm setShowModal={setShowModal} setData={setData} view={view} />
         </Modal>
       )}
     </div>

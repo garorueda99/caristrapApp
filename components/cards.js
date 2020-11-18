@@ -4,17 +4,17 @@ import styles from '../styles/Cards.module.css';
 import Modal from './modal';
 import TodoForm from './todoForm';
 
-export default function Cards() {
-  const [data, setData] = useState([]);
+export default function Cards({ view, data, setData }) {
   const [todoPointer, setTodoPointer] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     try {
       (async () => {
         const res = await fetch('/api/todos/cards');
         const data = await res.json();
         setData(data);
+        setLoaded(true);
       })();
     } catch (err) {
       console.log('ERROR:', err);
@@ -22,14 +22,15 @@ export default function Cards() {
   }, []);
   return (
     <div className={styles.mainWrapper}>
-      {data.map((todo, index) => (
-        <Card
-          key={index}
-          data={todo}
-          setShowModal={setShowModal}
-          setData={setTodoPointer}
-        />
-      ))}
+      {loaded &&
+        data.map((todo, index) => (
+          <Card
+            key={index}
+            data={todo}
+            setShowModal={setShowModal}
+            setData={setTodoPointer}
+          />
+        ))}
       {showModal && (
         <Modal setShowModal={setShowModal} setData={setTodoPointer}>
           <TodoForm
@@ -37,6 +38,7 @@ export default function Cards() {
             setData={setData}
             setTodoPointer={setTodoPointer}
             todoPointer={todoPointer}
+            view={view}
           />
         </Modal>
       )}

@@ -3,7 +3,7 @@ import TodoBar from '../components/todoBar';
 import Table from '../components/table';
 import Cards from '../components/cards';
 import styles from '../styles/Pages.module.css';
-import { formattedList } from '../lib/utils';
+import { formatList } from '../lib/utils';
 const columns = [
   {
     Header: 'id',
@@ -65,7 +65,7 @@ export default function todos() {
       (async () => {
         const res = await fetch('/api/todos');
         const data = await res.json();
-        setData(formattedList(data));
+        setData(formatList(data));
       })();
     } catch (err) {
       console.log('ERROR:', err);
@@ -96,6 +96,7 @@ export default function todos() {
           setSelectedRows={setSelectedRows}
           setData={setData}
           setView={setView}
+          view={view}
         />
       </div>
 
@@ -111,7 +112,7 @@ export default function todos() {
         )}
         {view === 'cards' && (
           <div className={styles.cardsWrapper}>
-            <Cards />
+            <Cards view={view} data={data} setData={setData} />
           </div>
         )}
       </div>

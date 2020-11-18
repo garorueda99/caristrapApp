@@ -7,47 +7,63 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import subDays from 'date-fns/subDays';
 import 'react-datepicker/dist/react-datepicker.css';
 import AssetsList from '../components/assetsList';
-import { formattedList } from '../lib/utils';
+import { formatList } from '../lib/utils';
 
-export default function todoForm({ setShowModal, setData, todoPointer }) {
-  const [task, setTask] = useState(null);
-  const [title, setTitle] = useState('');
-  const [startDate, setStartDate] = useState(new Date());
+export default function todoForm({
+  setShowModal,
+  setData,
+  todoPointer,
+  setTodoPointer,
+  view,
+}) {
+  const [task, setTask] = useState({ startDate: new Date() });
   const [step, setStep] = useState('');
-  const [steps, setSteps] = useState([]);
   const [stepIndex, setStepIndex] = useState(-1);
   const [assetWindow, setAssetWindow] = useState(false);
-  const [assetsList, setAssetsList] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (task) {
-      try {
-        const res = await fetch('/api/todos', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'applicatrion/json',
-          },
-          body: JSON.stringify({ ...task }),
-        });
-        const data = await res.json();
-        setData(formattedList(data));
-        setShowModal(false);
-      } catch (err) {}
+    if (Object.keys(task).length > 3) {
+      if (view === 'table') {
+        try {
+          const res = await fetch('/api/todos', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'applicatrion/json',
+            },
+            body: JSON.stringify({ ...task }),
+          });
+          const data = await res.json();
+          setData(formatList(data));
+          setShowModal(false);
+        } catch (err) {
+          console.log('ERROR:', err);
+        }
+      } else if (view === 'cards') {
+        try {
+          const res = await fetch('/api/todos/cards', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'applicatrion/json',
+            },
+            body: JSON.stringify({ ...task }),
+          });
+          const data = await res.json();
+          console.log('====>', data);
+          setData(data);
+          setShowModal(false);
+        } catch (err) {
+          console.log('ERROR:', err);
+        }
+      }
     }
   };
 
   const handleTaskInfoChange = (e) => {
     setTask({ ...task, [e.target.name]: e.target.value });
-    switch (e.target.name) {
-      case 'title':
-        setTitle(e.target.value);
-        break;
-    }
   };
-
-  const validate = () => {};
 
   useEffect(() => {
     if (todoPointer) {
@@ -64,16 +80,17 @@ export default function todoForm({ setShowModal, setData, todoPointer }) {
       {assetWindow ? (
         <AssetsList
           setAssetWindow={setAssetWindow}
-          title={title}
-          assetsList={assetsList}
-          setAssetsList={setAssetsList}
+          task={task}
+          setTask={setTask}
         />
       ) : (
         <form className={styles.formWrapper} onSubmit={handleSubmit}>
+          {/* {JSON.stringify(task)} */}
+          {/* <div>{JSON.stringify(step)}</div> */}
           <input
             className={styles.title}
             name='title'
-            value={title}
+            value={task.title || ''}
             placeholder='New Task Title'
             onChange={handleTaskInfoChange}
             required
@@ -94,10 +111,9 @@ export default function todoForm({ setShowModal, setData, todoPointer }) {
               </label>
               <DatePicker
                 name='due_date'
-                selected={startDate}
+                selected={task.startDate}
                 onChange={(date) => {
-                  setStartDate(date);
-                  setTask({ ...task, startDate });
+                  setTask({ ...task, startDate: date });
                 }}
                 minDate={subDays(new Date(), 0)}
                 className={styles.input}
@@ -129,7 +145,7 @@ export default function todoForm({ setShowModal, setData, todoPointer }) {
             </div>
           </section>
           <section className={styles.sectionWrapper}>
-            <h2>Steps {steps.length === 0 ? '' : `(${steps.length})`}:</h2>
+            <h2>Steps {task.steps && task.steps.length}:</h2>
             <div className={styles.stepBox}>
               <textarea
                 rows='5'
@@ -144,9 +160,9 @@ export default function todoForm({ setShowModal, setData, todoPointer }) {
                   className={styles.smallButton}
                   onClick={() => {
                     if (step.length > 0) {
-                      const newArray = steps;
+                      const newArray = [...task.steps];
                       newArray.splice(stepIndex, 1, step);
-                      setSteps([...newArray]);
+                      setTask({ ...task, steps: [...newArray] });
                       setStep('');
                       setStepIndex(-1);
                     }
@@ -159,8 +175,11 @@ export default function todoForm({ setShowModal, setData, todoPointer }) {
                   type='button'
                   className={styles.smallButton}
                   onClick={() => {
+                    // console.log(step, step.length);
                     if (step.length > 0) {
-                      setSteps([...steps, step]);
+                      task.steps
+                        ? setTask({ ...task, steps: [...task.steps, step] })
+                        : setTask({ ...task, steps: [step] });
                       setStep('');
                     }
                   }}
@@ -170,34 +189,39 @@ export default function todoForm({ setShowModal, setData, todoPointer }) {
               )}
             </div>
             <div className={styles.stepsContainer}>
-              {steps.map((step, index) => (
-                <div data-key={index} className={styles.stepBox}>
-                  <button
-                    type='button'
-                    className={styles.step}
-                    onClick={(e) => {
-                      setStep(steps[index]);
-                      setStepIndex(index);
-                    }}
+              {task.steps &&
+                task.steps.map((element, index) => (
+                  <div
+                    data-key={index}
+                    className={styles.stepBox}
+                    key={`step-${index}`}
                   >
-                    <div data-key={index} className={styles.textStep}>
-                      Step {index + 1}: {step.slice(0, 20).trim()}...
-                    </div>
-                  </button>
-                  <button
-                    className={styles.deleteBtn}
-                    type='button'
-                    onClick={(e) => {
-                      const newArray = steps;
-                      newArray.splice(index, 1);
-                      setSteps([...newArray]);
-                      setStepIndex(-1);
-                    }}
-                  >
-                    <AiOutlineDelete size='25' />
-                  </button>
-                </div>
-              ))}
+                    <button
+                      type='button'
+                      className={styles.step}
+                      onClick={(e) => {
+                        setStep(task.steps[index]);
+                        setStepIndex(index);
+                      }}
+                    >
+                      <div data-key={index} className={styles.textStep}>
+                        Step {index + 1}:{element.slice(0, 20).trim()}...
+                      </div>
+                    </button>
+                    <button
+                      className={styles.deleteBtn}
+                      type='button'
+                      onClick={(e) => {
+                        const newArray = [...task.steps];
+                        newArray.splice(index, 1);
+                        setTask({ ...task, steps: [...newArray] });
+                        setStepIndex(-1);
+                      }}
+                    >
+                      <AiOutlineDelete size='25' />
+                    </button>
+                  </div>
+                ))}
             </div>
           </section>
 
@@ -206,8 +230,7 @@ export default function todoForm({ setShowModal, setData, todoPointer }) {
             onSubmit={() => {
               setTask({
                 ...task,
-                startDate,
-                steps,
+                // steps,
                 status: open,
                 assets: assetsList,
               });
