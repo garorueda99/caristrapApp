@@ -61,16 +61,18 @@ export default function todos() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [view, setView] = useState('table');
   useEffect(() => {
-    try {
-      (async () => {
-        const res = await fetch('/api/todos');
-        const data = await res.json();
-        setData(formatList(data));
-      })();
-    } catch (err) {
-      console.log('ERROR:', err);
+    if (view === 'table') {
+      try {
+        (async () => {
+          const res = await fetch('/api/todos');
+          const data = await res.json();
+          setData(formatList(data));
+        })();
+      } catch (err) {
+        console.log('ERROR:', err);
+      }
     }
-  }, []);
+  }, [view]);
 
   const updateMyData = (rowIndex, columnId, value) => {
     // We also turn on the flag to not reset the page
