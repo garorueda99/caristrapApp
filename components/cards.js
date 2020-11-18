@@ -21,27 +21,30 @@ export default function Cards({ view, data, setData }) {
     }
   }, []);
   return (
-    <div className={styles.mainWrapper}>
-      {loaded &&
-        data.map((todo, index) => (
-          <Card
-            key={index}
-            data={todo}
-            setShowModal={setShowModal}
-            setData={setTodoPointer}
-          />
-        ))}
-      {showModal && (
-        <Modal setShowModal={setShowModal} setData={setTodoPointer}>
-          <TodoForm
-            setShowModal={setShowModal}
-            setData={setData}
-            setTodoPointer={setTodoPointer}
-            todoPointer={todoPointer}
-            view={view}
-          />
-        </Modal>
-      )}
-    </div>
+    <>
+      {loaded && <div>{data.length} Task(s)</div>}
+      <div className={styles.mainWrapper}>
+        {loaded &&
+          data.map((todo, index) => (
+            <Card
+              key={index}
+              data={todo}
+              setShowModal={setShowModal}
+              setData={setData}
+            />
+          ))}
+        {showModal && (
+          <Modal setShowModal={setShowModal} setData={setTodoPointer}>
+            <TodoForm
+              setShowModal={setShowModal}
+              setData={setData}
+              setTodoPointer={setTodoPointer}
+              todoPointer={todoPointer}
+              view={view}
+            />
+          </Modal>
+        )}
+      </div>
+    </>
   );
 }

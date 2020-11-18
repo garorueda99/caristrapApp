@@ -4,6 +4,23 @@ import { BiTask, BiAlarmOff, BiEdit, BiTrash } from 'react-icons/bi';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 export default function Card({ data, setShowModal, setData }) {
+  const deleteTask = async (taskId) => {
+    try {
+      const res = await fetch('/api/todos/cards', {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'applicatrion/json',
+        },
+        body: JSON.stringify(taskId),
+      });
+      const data1 = await res.json();
+      setData([...data1]);
+    } catch (err) {
+      console.log('ERROR:', err);
+    }
+  };
+
   return (
     <div className={styles.mainWrapper}>
       <button>
@@ -47,7 +64,11 @@ export default function Card({ data, setShowModal, setData }) {
         <button>
           <BiAlarmOff color='white' size='25' />
         </button>
-        <button>
+        <button
+          onClick={() => {
+            deleteTask(data._id);
+          }}
+        >
           <BiTrash color='white' size='25' />
         </button>
       </div>

@@ -21,7 +21,7 @@ export default function assetsBar({ selectedRows, setSelectedRows, setData }) {
         <button
           className={styles.button}
           onClick={() => {
-            setShowDelModal(true);
+            selectedRows.length > 0 && setShowDelModal(true);
           }}
         >
           DELETE
