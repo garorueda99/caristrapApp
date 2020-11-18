@@ -28,7 +28,7 @@ export default function Card({ data, setShowModal, setData }) {
           </div>
           <div className={styles.info}>
             <h3>Assignments:</h3>
-            {data && Object.keys(data.assets).length}
+            {data.assets && Object.keys(data.assets).length}
           </div>
         </div>
       </button>
