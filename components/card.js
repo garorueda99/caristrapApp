@@ -3,7 +3,7 @@ import styles from '../styles/Card.module.css';
 import { BiTask, BiAlarmOff, BiEdit, BiTrash } from 'react-icons/bi';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
-export default function Card({ data, setShowModal, setTodoPointer }) {
+export default function Card({ data, setShowModal, setTodoPointer, setData }) {
   const deleteTask = async (taskId) => {
     try {
       const res = await fetch('/api/todos/cards', {
@@ -15,6 +15,7 @@ export default function Card({ data, setShowModal, setTodoPointer }) {
         body: JSON.stringify(taskId),
       });
       const data1 = await res.json();
+      console.log('==>', data1);
       setData([...data1]);
     } catch (err) {
       console.log('ERROR:', err);
