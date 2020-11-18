@@ -100,8 +100,8 @@ export default function todos() {
         />
       </div>
 
-      <div className={styles.gridWrapper}>
-        {view === 'table' && (
+      {view === 'table' && (
+        <div className={styles.tableWrapper}>
           <Table
             columns={columns}
             data={data}
@@ -109,13 +109,15 @@ export default function todos() {
             updateMyData={updateMyData}
             skipPageReset={skipPageReset}
           />
-        )}
-        {view === 'cards' && (
+        </div>
+      )}
+      {view === 'cards' && (
+        <div className={styles.gridWrapper}>
           <div className={styles.cardsWrapper}>
             <Cards view={view} data={data} setData={setData} />
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

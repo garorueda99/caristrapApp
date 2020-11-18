@@ -228,16 +228,17 @@ export default function Table({
 }
 
 const Styles = styled.div`
+  display: table;
+  width: 100%;
   background-color: var(--card-color-background);
   box-shadow: 0px 0px 3px 0px var(--primary-border);
   border-radius: 4px;
   /* border: 2px solid blue; */
   padding: 30px 20px 10px 20px;
-
+  /* border: 2px solid red; */
   /* .user {
     color: white;
   } */
-
   table {
     border-spacing: 0;
     border: 2px solid var(--primary-border);
