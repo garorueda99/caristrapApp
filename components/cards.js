@@ -22,7 +22,7 @@ export default function Cards({ view, data, setData }) {
   }, []);
   return (
     <>
-      {loaded && <div>{data.length} Task(s)</div>}
+      {loaded && <div>{data.length} Todo(s)</div>}
       <div className={styles.mainWrapper}>
         {loaded &&
           data.map((todo, index) => (
@@ -31,6 +31,7 @@ export default function Cards({ view, data, setData }) {
               data={todo}
               setShowModal={setShowModal}
               setData={setData}
+              setTodoPointer={setTodoPointer}
             />
           ))}
         {showModal && (
@@ -42,6 +43,7 @@ export default function Cards({ view, data, setData }) {
               todoPointer={todoPointer}
               view={view}
             />
+            {/* {JSON.stringify(todoPointer)} */}
           </Modal>
         )}
       </div>

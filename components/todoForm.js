@@ -67,11 +67,8 @@ export default function todoForm({
 
   useEffect(() => {
     if (todoPointer) {
-      console.log(todoPointer);
-      setTitle(todoPointer.title);
       // setStartDate(todoPointer.startDate);
-      setSteps(todoPointer.steps);
-      setAssetsList(todoPointer.assets);
+      setTask({ ...todoPointer, startDate: new Date(todoPointer.startDate) });
     }
   }, []);
 

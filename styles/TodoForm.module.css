@@ -112,6 +112,7 @@
   border: 2px solid var(--primary-border);
   margin-bottom: 1px;
   padding: 0 16px;
+  padding-right: 50px;
 }
 
 .stepsContainer {
