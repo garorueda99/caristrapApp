@@ -1,3 +1,8 @@
+import Reminder from '../components/reminder';
 export default function dashboard() {
-  return <div>DASHBOARD</div>;
+  return (
+    <div>
+      <Reminder />
+    </div>
+  );
 }

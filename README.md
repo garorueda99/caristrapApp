@@ -13,6 +13,7 @@ A todo list of all maintenance operations combined with a task scheduler (calend
 Stacks:
 
 - Vanilla Javascript
+- React
 - [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 - MongoDB
 - Magic.Link
