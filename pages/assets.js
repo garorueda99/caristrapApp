@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import AssetsBar from '../components/assetsBar';
 import Table from '../components/table';
 import styles from '../styles/Pages.module.css';
@@ -8,7 +8,7 @@ import styles from '../styles/Pages.module.css';
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function assets() {
-  const columns = [
+  const columns = useMemo(() => [
     {
       Header: 'id',
       accessor: '_id',
@@ -57,7 +57,7 @@ export default function assets() {
       Header: 'Status',
       accessor: 'status',
     },
-  ];
+  ]);
 
   // const { data: result, error } = useSWR('/api/assets', fetcher);
 

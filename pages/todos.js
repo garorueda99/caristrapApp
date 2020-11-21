@@ -1,65 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import TodoBar from '../components/todoBar';
 import Table from '../components/table';
 import Cards from '../components/cards';
 import styles from '../styles/Pages.module.css';
 import { formatList } from '../lib/utils';
-const columns = [
-  {
-    Header: 'id',
-    accessor: '_id',
-    // className: 'user',
-    style: {
-      fontWeight: 'bolder',
-      overflow: 'hidden',
-      display: 'none',
-    },
-  },
-  {
-    Header: 'Task',
-    accessor: 'title',
-  },
-  {
-    Header: 'Machine',
-    accessor: 'machine_name',
-    // className: 'user',
-    style: {
-      fontWeight: 'bolder',
-      overflow: 'hidden',
-    },
-  },
-  {
-    Header: 'Tag #',
-    accessor: 'tag',
-    style: {
-      fontWeight: 'bolder',
-      overflow: 'hidden',
-      maxWidth: '30px',
-    },
-  },
-  {
-    Header: 'Due  Date',
-    accessor: 'startDate',
-  },
-  {
-    Header: 'Frequency',
-    accessor: 'frequency',
-    style: {
-      fontWeight: 'bolder',
-      overflow: 'hidden',
-    },
-  },
-  {
-    Header: 'Status',
-    accessor: 'status',
-  },
-];
 
 export default function todos() {
   const [data, setData] = useState([]);
   const [skipPageReset, setSkipPageReset] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [view, setView] = useState('table');
+  const columns = useMemo(() => [
+    {
+      Header: 'id',
+      accessor: '_id',
+      // className: 'user',
+      style: {
+        fontWeight: 'bolder',
+        overflow: 'hidden',
+        display: 'none',
+      },
+    },
+    {
+      Header: 'Task',
+      accessor: 'title',
+    },
+    {
+      Header: 'Machine',
+      accessor: 'machine_name',
+      // className: 'user',
+      style: {
+        fontWeight: 'bolder',
+        overflow: 'hidden',
+      },
+    },
+    {
+      Header: 'Tag #',
+      accessor: 'tag',
+      style: {
+        fontWeight: 'bolder',
+        overflow: 'hidden',
+        maxWidth: '30px',
+      },
+    },
+    {
+      Header: 'Due  Date',
+      accessor: 'startDate',
+    },
+    {
+      Header: 'Frequency',
+      accessor: 'frequency',
+      style: {
+        fontWeight: 'bolder',
+        overflow: 'hidden',
+      },
+    },
+    {
+      Header: 'Status',
+      accessor: 'status',
+    },
+  ]);
   useEffect(() => {
     if (view === 'table') {
       try {
