@@ -1,6 +1,7 @@
 import styles from '../styles/Side_nav.module.css';
 import Link from 'next/link';
 import User from './user';
+
 import { BiHomeSmile, BiTachometer } from 'react-icons/bi';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { GiFactory } from 'react-icons/gi';
@@ -19,7 +20,7 @@ export default function side_bar() {
             </li>
           </a>
         </Link> */}
-        <Link href='/dashboard'>
+        <Link href='/'>
           <a>
             <li>
               <BiTachometer className={styles.icons} />

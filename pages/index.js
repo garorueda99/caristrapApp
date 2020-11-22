@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { UserContext } from '../components/store';
-
+import Reminder from '../components/reminder';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
@@ -24,7 +24,8 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to Main</h1>
+        <h1 className={styles.title}>Welcome to the Dashboard</h1>
+        <Reminder />
       </main>
     </div>
   );

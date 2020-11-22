@@ -1,25 +1,9 @@
-// import React from 'react';
-// const friendList = [
-//   { id: 1, name: 'Phoebe' },
-//   { id: 2, name: 'Rachel' },
-//   { id: 3, name: 'Ross' },
-// ];
+import useSWR from 'swr';
+import { todoFetcher } from '../lib/fetchers';
+
 export default function reminder() {
-  //   const [recipientID, setRecipientID] = useState(1);
-  //   const isRecipientOnline = useFriendStatus(recipientID);
-  //   return (
-  //     <>
-  //       <Circle color={isRecipientOnline ? 'green' : 'red'} />
-  //       <select
-  //         value={recipientID}
-  //         onChange={(e) => setRecipientID(Number(e.target.value))}
-  //       >
-  //         {friendList.map((friend) => (
-  //           <option key={friend.id} value={friend.id}>
-  //             {friend.name}
-  //           </option>
-  //         ))}
-  //       </select>
-  //     </>
-  //   );
+  const { data, error } = useSWR('/api/todos', todoFetcher);
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
+  return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
