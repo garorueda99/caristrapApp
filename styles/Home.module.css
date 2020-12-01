@@ -16,6 +16,13 @@
   align-items: center;
 }
 
+.headerWrapper {
+  width: 100%;
+  display: flex;
+  padding: 16px;
+  /* border: 2px solid green; */
+}
+
 .footer img {
   margin-left: 0.5rem;
 }

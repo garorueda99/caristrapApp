@@ -48,7 +48,7 @@ export default function side_bar() {
           <a>
             <li>
               <VscAccount className={styles.icons} />
-              Account
+              Accounts
             </li>
           </a>
         </Link>
