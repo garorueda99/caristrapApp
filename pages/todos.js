@@ -4,12 +4,18 @@ import Table from '../components/table';
 import Cards from '../components/cards';
 import styles from '../styles/Pages.module.css';
 import { formatList } from '../lib/utils';
+// import { useTodos } from '../hooks/useTodos';
 
 export default function todos() {
+  // const { todos, isLoading, isError } = useTodos();
+  // if (isError) return <div>failed to load</div>;
+  // if (isLoading) return <div>loading...</div>;
   const [data, setData] = useState([]);
   const [skipPageReset, setSkipPageReset] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [view, setView] = useState('table');
+  // if (isError) return <div>failed to load</div>;
+  // if (isLoading) return <div>loading...</div>;
   const columns = useMemo(() => [
     {
       Header: 'id',
@@ -60,6 +66,12 @@ export default function todos() {
       accessor: 'status',
     },
   ]);
+  // useEffect(() => {
+  //   if (!isLoading && !isError) {
+  //     setData(formatList(todos));
+  //   }
+  // });
+
   useEffect(() => {
     if (view === 'table') {
       try {
@@ -101,7 +113,7 @@ export default function todos() {
           view={view}
         />
       </div>
-
+      {/* <pre>{JSON.stringify(todos, 2, null)}</pre> */}
       {view === 'table' && (
         <div className={styles.tableWrapper}>
           <Table
@@ -110,6 +122,8 @@ export default function todos() {
             setSelectedRows={setSelectedRows}
             updateMyData={updateMyData}
             skipPageReset={skipPageReset}
+            // isLoading={isLoading}
+            // isError={isError}
           />
         </div>
       )}

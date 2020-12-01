@@ -9,7 +9,7 @@ export default function newAsset({ children, setShowModal, setData }) {
             className={styles.close}
             onClick={() => {
               setShowModal(false);
-              setData(null);
+              // setData(null);
             }}
           >
             &times;

@@ -11,14 +11,15 @@ const EditableCell = ({
 }) => {
   // We need to keep and update the state of the cell normally
   const [value, setValue] = React.useState(initialValue);
-
   const onChange = (e) => {
+    // console.log(id, index);
     setValue(e.target.value);
   };
 
   // We'll only update the external data when the input is blurred
   const onBlur = () => {
     updateMyData(index, id, value);
+    // newData.current = { ...newData, index: id };
   };
 
   // If the initialValue is changed external, sync it up with our state
@@ -64,7 +65,12 @@ export default function Table({
   getColumnProps = defaultPropGetter,
   getRowProps = defaultPropGetter,
   getCellProps = defaultPropGetter,
+  isLoading,
+  isError,
+  newData,
 }) {
+  if (isError) return <div>failed to load</div>;
+  if (isLoading) return <div>loading...</div>;
   const {
     getTableProps,
     getTableBodyProps,

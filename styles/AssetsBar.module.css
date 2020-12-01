@@ -14,6 +14,7 @@
 }
 
 .button {
+  position: relative;
   border: 1.5px dotted var(--primary-border);
   background-color: var(--secondary-color-background);
   color: var(--secondary-color-text);
@@ -23,6 +24,20 @@
   font-weight: 600;
   margin-right: 4px;
   border-radius: 4px;
+}
+
+.infoCount {
+  position: absolute;
+  background-color: var(--primary-color-highligth);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  left: 80%;
+  z-index: 2;
 }
 
 .button:hover {

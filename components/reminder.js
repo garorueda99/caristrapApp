@@ -1,9 +1,8 @@
-import useSWR from 'swr';
-import { todoFetcher } from '../lib/fetchers';
-
+import { useTodos } from '../hooks/useTodos';
 export default function reminder() {
-  const { data, error } = useSWR('/api/todos', todoFetcher);
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
-  return <pre>{JSON.stringify(data, null, 2)}</pre>;
+  const { todos, isLoading, isError } = useTodos();
+
+  if (isError) return <div>failed to load</div>;
+  if (isLoading) return <div>loading...</div>;
+  return <pre>{JSON.stringify(todos, null, 2)}</pre>;
 }

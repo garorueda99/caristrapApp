@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import AssetsBar from '../components/assetsBar';
 import Table from '../components/table';
 import styles from '../styles/Pages.module.css';
@@ -63,7 +63,7 @@ export default function assets() {
 
   // if (error) return <h1>Something went wrong!</h1>;
   // if (!result) return <h1>Loading...</h1>;
-
+  const newDataIndex = useRef([]);
   const [data, setData] = useState([]);
   const [skipPageReset, setSkipPageReset] = useState(false);
 
@@ -73,12 +73,23 @@ export default function assets() {
     setData(data.assets);
   }, []);
 
+  const updateMyDB = (rowIndex) => {
+    if (newDataIndex.current.length > 0) {
+      if (!newDataIndex.current.includes(rowIndex)) {
+        newDataIndex.current = [...newDataIndex.current, rowIndex];
+      }
+    } else {
+      newDataIndex.current = [rowIndex];
+    }
+  };
+
   const updateMyData = (rowIndex, columnId, value) => {
     // We also turn on the flag to not reset the page
     setSkipPageReset(true);
     setData((old) =>
       old.map((row, index) => {
         if (index === rowIndex) {
+          updateMyDB(rowIndex, columnId);
           return {
             ...old[rowIndex],
             [columnId]: value,
@@ -95,9 +106,11 @@ export default function assets() {
     <div className={styles.mainContainer}>
       <div className={styles.headerWrapper}>
         <AssetsBar
+          newDataIndex={newDataIndex}
           selectedRows={selectedRows}
           setSelectedRows={setSelectedRows}
           setData={setData}
+          data={data}
         />
       </div>
       <div className={styles.gridWrapper}>
