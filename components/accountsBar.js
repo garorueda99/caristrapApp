@@ -16,6 +16,14 @@ export default function accountsBar() {
             setShowAssetModal(true);
           }}
         >
+          MODIFY
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => {
+            setShowAssetModal(true);
+          }}
+        >
           ADD NEW
         </button>
       </div>

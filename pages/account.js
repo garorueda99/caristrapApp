@@ -60,13 +60,15 @@ export default function account() {
         <AccountsBar />
       </div>
       {!!users && (
-        <Table
-          columns={columns}
-          data={users}
-          setSelectedRows={setSelectedRows}
-          updateMyData={updateMyData}
-          skipPageReset={skipPageReset}
-        />
+        <div className={styles.headerWrapper}>
+          <Table
+            columns={columns}
+            data={users}
+            setSelectedRows={setSelectedRows}
+            updateMyData={updateMyData}
+            skipPageReset={skipPageReset}
+          />
+        </div>
       )}
     </div>
   );
