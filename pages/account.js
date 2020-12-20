@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import styles from '../styles/Accounts.module.css';
 import AccountsBar from '../components/accountsBar';
 import Table from '../components/table';
-
+import { ACCOUNT_COLUMNS } from '../lib/columns';
 export default function account() {
   const [skipPageReset, setSkipPageReset] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -33,26 +33,7 @@ export default function account() {
     );
   };
 
-  const columns = useMemo(() => [
-    {
-      Header: 'id',
-      accessor: '_id',
-      // className: 'user',
-      style: {
-        fontWeight: 'bolder',
-        overflow: 'hidden',
-        display: 'none',
-      },
-    },
-    {
-      Header: 'Email',
-      accessor: 'email',
-    },
-    {
-      Header: 'Profile',
-      accessor: 'profile',
-    },
-  ]);
+  const columns = useMemo(() => ACCOUNT_COLUMNS, []);
 
   return (
     <div>
