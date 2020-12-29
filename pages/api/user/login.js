@@ -1,26 +1,7 @@
 import { Magic } from '@magic-sdk/admin';
 import Iron from '@hapi/iron';
 import CookieService from '../../../lib/cookie';
-import { connectToDatabase } from '../../../lib/mongodb';
-
-const signup = async (user) => {
-  const newUser = {
-    ...user,
-    date: new Date(),
-  };
-  try {
-    const { db } = await connectToDatabase();
-    const result = await db
-      .collection('users')
-      .replaceOne({ email: newUser.email }, newUser, { upsert: true });
-  } catch (error) {
-    console.log(
-      'There was a problem while saving the user in the server',
-      error
-    );
-    res.status(405);
-  }
-};
+import { signup } from '../../../lib/mongolib';
 
 export default async (req, res) => {
   if (req.method !== 'POST') {
@@ -32,13 +13,6 @@ export default async (req, res) => {
   const user = await new Magic(
     process.env.MAGIC_SECRET_KEY
   ).users.getMetadataByToken(did);
-
-  //user structure:
-  // {
-  //   issuer: 'did:***************************************',
-  //   publicAddress: '********************************************',
-  //   email: 'garo99@gmail.com'
-  // }
 
   //Saving in mongoDB
   signup(user);

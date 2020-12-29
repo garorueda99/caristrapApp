@@ -13,7 +13,11 @@ function MyApp({ Component, pageProps }) {
       const response = await data.json();
       setUserFetched(true);
       if (data.ok) {
-        setUserInfo(response.email);
+        setUserInfo({
+          email: response.email,
+          profile: response.profile,
+          add: 'test',
+        });
         setAuthorized(true);
       }
     })();
@@ -21,6 +25,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      <div>{JSON.stringify(userInfo)}</div>
       {userFetched ? (
         <Store userInfo={userInfo} authorized={authorized}>
           <Component {...pageProps} />

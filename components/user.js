@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { UserContext } from './store';
 
 export default function user() {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   return (
     <div className={styles.wrapper}>
       <VscAccount size={65} />

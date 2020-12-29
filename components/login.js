@@ -1,23 +1,25 @@
 import styles from '../styles/Login.module.css';
 import { useContext, useEffect } from 'react';
-import { MagicContext, UserContext, LoggedInContext } from './store';
+import { MagicContext, LoggedInContext } from './store';
 import { useRouter } from 'next/router';
 
 export default function Login() {
+  const { ENVIROMENT } = process.env;
   const [magic] = useContext(MagicContext);
-  const [user, setUser] = useContext(UserContext);
-  const [loggedin, setLoggedIn] = useContext(LoggedInContext);
+  const [, setLoggedIn] = useContext(LoggedInContext);
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/');
+    if (ENVIROMENT === 'PROD') {
+      router.push('/');
+    }
   }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { elements } = event.target;
 
-    // Add the Magic code here
+    // Magic code
     const did = await magic.auth.loginWithMagicLink({
       email: elements.email.value,
     });
