@@ -15,7 +15,9 @@ export default async (req, res) => {
   ).users.getMetadataByToken(did);
 
   //Saving user in mongoDB
-  const { email, profile } = signup(user);
+  const resp = await signup(user);
+
+  console.log('==>', resp);
 
   //Encrypts the token
   const encrypted_token = await Iron.seal(
