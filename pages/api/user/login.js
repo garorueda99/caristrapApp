@@ -14,8 +14,8 @@ export default async (req, res) => {
     process.env.MAGIC_SECRET_KEY
   ).users.getMetadataByToken(did);
 
-  //Saving in mongoDB
-  signup(user);
+  //Saving user in mongoDB
+  const { email, profile } = signup(user);
 
   //Encrypts the token
   const encrypted_token = await Iron.seal(

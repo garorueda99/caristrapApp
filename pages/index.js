@@ -6,15 +6,15 @@ import styles from '../styles/Home.module.css';
 import DashboardBar from '../components/dashboardBar';
 export default function Home() {
   const [user, setUser] = useContext(UserContext);
-  useEffect(() => {
-    (async () => {
-      const data = await fetch('/api/user');
-      const response = await data.json();
-      if (data.ok) {
-        setUser(response.email);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const data = await fetch('/api/user');
+  //     const response = await data.json();
+  //     if (data.ok) {
+  //       setUser(response.email);
+  //     }
+  //   })();
+  // }, []);
 
   return (
     <div>
