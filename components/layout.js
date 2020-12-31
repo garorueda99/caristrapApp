@@ -7,7 +7,7 @@ import SideNav from './side_nav';
 import Login from './login';
 
 const Layout = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useContext(LoggedInContext);
+  const [loggedIn] = useContext(LoggedInContext);
   const [user, setUser] = useContext(UserContext);
   return (
     <div className={styles.wrapper}>

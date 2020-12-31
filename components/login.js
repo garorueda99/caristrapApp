@@ -19,7 +19,7 @@ export default function Login() {
     event.preventDefault();
     const { elements } = event.target;
 
-    // Magic code
+    // Magic code - Authentication
     const did = await magic.auth.loginWithMagicLink({
       email: elements.email.value,
     });
@@ -30,6 +30,7 @@ export default function Login() {
       headers: new Headers({ Authorization: `Bearer ${did}` }),
     });
 
+    // console.log(authRequest, authRequest.ok);
     if (authRequest.ok) {
       setLoggedIn(true);
     } else {

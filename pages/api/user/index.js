@@ -1,4 +1,4 @@
-// this was to validate the cookie and allow user to login without magic
+// user info
 
 // import Iron from '@hapi/iron';
 // import CookieService from '../../../lib/cookie';

@@ -9,7 +9,7 @@ import styles from '../../styles/Menu_items.module.css';
 export default function menu_items() {
   const [user, setUser] = useContext(UserContext);
   const [magic] = useContext(MagicContext);
-  const [loggedIn, setLoggedIn] = useContext(LoggedInContext);
+  const [, setLoggedIn] = useContext(LoggedInContext);
 
   const handleLogout = async () => {
     await fetch(`/api/user/logout`, {

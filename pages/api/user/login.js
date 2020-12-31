@@ -15,13 +15,11 @@ export default async (req, res) => {
   ).users.getMetadataByToken(did);
 
   //Saving user in mongoDB
-  const resp = await signup(user);
-
-  console.log('==>', resp);
+  const authUser = await signup(user);
 
   //Encrypts the token
   const encrypted_token = await Iron.seal(
-    user,
+    authUser,
     process.env.ENCRYPTION_SECRET,
     Iron.defaults
   );

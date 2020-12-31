@@ -12,6 +12,7 @@ const Store = ({ children, userInfo, authorized }) => {
   const [user, setUser] = useState(userInfo);
   const [loggedIn, setLoggedIn] = useState(false);
   const [magic, setMagic] = useState();
+
   useEffect(() => {
     (async () => {
       /*loads Magic as variable*/
@@ -21,9 +22,9 @@ const Store = ({ children, userInfo, authorized }) => {
     })();
   }, []);
 
-  useEffect(() => {
-    setLoggedIn(authorized);
-  }, [authorized]);
+  // useEffect(() => {
+  //   setLoggedIn(authorized);
+  // }, [authorized]);
 
   return (
     <LoggedInContext.Provider value={[loggedIn, setLoggedIn]}>
