@@ -22,9 +22,16 @@ const Store = ({ children, userInfo, authorized }) => {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   setLoggedIn(authorized);
-  // }, [authorized]);
+  useEffect(() => {
+    (async () => {
+      const data = await fetch('/api/user');
+      const response = await data.json();
+      if (data.ok) {
+        setUser(response);
+      }
+    })();
+    console.log('show me the user', user);
+  }, [loggedIn]);
 
   return (
     <LoggedInContext.Provider value={[loggedIn, setLoggedIn]}>

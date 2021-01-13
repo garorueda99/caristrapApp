@@ -2,6 +2,7 @@ import { Magic } from '@magic-sdk/admin';
 import Iron from '@hapi/iron';
 import CookieService from '../../../lib/cookie';
 import { signup } from '../../../lib/mongolib';
+import { UserContext } from '../../../components/store';
 
 export default async (req, res) => {
   if (req.method !== 'POST') {

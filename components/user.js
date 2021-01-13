@@ -8,7 +8,8 @@ export default function user() {
   return (
     <div className={styles.wrapper}>
       <VscAccount size={65} />
-      <div>{user}</div>
+      <div>{user.email}</div>
+      <div>Profile: {user.profile}</div>
     </div>
   );
 }

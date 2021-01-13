@@ -30,7 +30,6 @@ export default function Login() {
       headers: new Headers({ Authorization: `Bearer ${did}` }),
     });
 
-    // console.log(authRequest, authRequest.ok);
     if (authRequest.ok) {
       setLoggedIn(true);
     } else {
@@ -46,22 +45,22 @@ export default function Login() {
         <p className={styles.description}>Get started by</p>
         <div className={styles.loginWrapper}>
           <form onSubmit={handleSubmit} className={styles.card}>
-            <label htmlFor='email' className={styles.description}>
+            <label htmlFor="email" className={styles.description}>
               Your Caristrap Email:{' '}
             </label>
-            <input name='email' type='email' className={styles.email} />
+            <input name="email" type="email" className={styles.email} />
             <button className={styles.button}>Log in</button>
           </form>
         </div>
       </main>
       <footer className={styles.footer}>
         <a
-          href='http://caristrap.com'
-          target='_blank'
-          rel='noopener noreferrer'
+          href="http://caristrap.com"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Powered by{' '}
-          <img src='/cLogo.gif' alt='Caristrap Logo' className={styles.logo} />
+          <img src="/cLogo.gif" alt="Caristrap Logo" className={styles.logo} />
         </a>
       </footer>
     </div>
