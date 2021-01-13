@@ -12,7 +12,6 @@ const EditableCell = ({
   // We need to keep and update the state of the cell normally
   const [value, setValue] = React.useState(initialValue);
   const onChange = (e) => {
-    // console.log(id, index);
     setValue(e.target.value);
   };
 
@@ -48,7 +47,7 @@ const IndeterminateCheckbox = React.forwardRef(
 
     return (
       <>
-        <input type='checkbox' ref={resolvedRef} {...rest} />
+        <input type="checkbox" ref={resolvedRef} {...rest} />
       </>
     );
   }
@@ -185,7 +184,7 @@ export default function Table({
           })}
         </tbody>
       </table>
-      <div className='pagination'>
+      <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>{' '}
@@ -207,7 +206,7 @@ export default function Table({
         <span>
           | Go to page:{' '}
           <input
-            type='number'
+            type="number"
             defaultValue={pageIndex + 1}
             onChange={(e) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;

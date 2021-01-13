@@ -22,7 +22,6 @@ export default async (req, res) => {
         process.env.ENCRYPTION_SECRET,
         Iron.defaults
       );
-      console.log('==>', userFromCookie);
     } else {
       return res.status(400).json({ message: 'No cookies were sent' });
     }

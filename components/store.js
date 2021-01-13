@@ -30,7 +30,6 @@ const Store = ({ children, userInfo, authorized }) => {
         setUser(response);
       }
     })();
-    console.log('show me the user', user);
   }, [loggedIn]);
 
   return (
@@ -40,7 +39,7 @@ const Store = ({ children, userInfo, authorized }) => {
           <Layout>
             <>
               {/* {navigator.onLine ? ( */}
-              {children}
+              {user && children}
               {/* ) : ( */}
               {/* <div>INTERNET CONNECTION LOST</div> */}
               {/* )} */}

@@ -15,7 +15,6 @@ export default function Card({ data, setShowModal, setTodoPointer, setData }) {
         body: JSON.stringify(taskId),
       });
       const data1 = await res.json();
-      console.log('==>', data1);
       setData([...data1]);
     } catch (err) {
       console.log('ERROR:', err);
@@ -26,7 +25,7 @@ export default function Card({ data, setShowModal, setTodoPointer, setData }) {
     <div className={styles.mainWrapper}>
       <button>
         <div className={styles.title}>
-          <BiTask className={styles.titleIcon} size='25' />
+          <BiTask className={styles.titleIcon} size="25" />
           <h3>{data.title}</h3>
         </div>
 
@@ -52,7 +51,7 @@ export default function Card({ data, setShowModal, setTodoPointer, setData }) {
       </button>
       <div className={styles.menu}>
         <button>
-          <AiOutlineCheckCircle color='white' size='25' />
+          <AiOutlineCheckCircle color="white" size="25" />
         </button>
         <button
           onClick={() => {
@@ -60,17 +59,17 @@ export default function Card({ data, setShowModal, setTodoPointer, setData }) {
             setShowModal(true);
           }}
         >
-          <BiEdit color='white' size='25' />
+          <BiEdit color="white" size="25" />
         </button>
         <button>
-          <BiAlarmOff color='white' size='25' />
+          <BiAlarmOff color="white" size="25" />
         </button>
         <button
           onClick={() => {
             deleteTask(data._id);
           }}
         >
-          <BiTrash color='white' size='25' />
+          <BiTrash color="white" size="25" />
         </button>
       </div>
     </div>

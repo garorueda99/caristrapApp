@@ -52,7 +52,6 @@ export default function todoForm({
               body: JSON.stringify({ ...task }),
             });
             const data = await res.json();
-            console.log('====>', data);
             setData(data);
             setShowModal(false);
           } catch (err) {
@@ -104,15 +103,15 @@ export default function todoForm({
           {/* <div>{JSON.stringify(step)}</div> */}
           <input
             className={styles.title}
-            name='title'
+            name="title"
             value={task.title || ''}
-            placeholder='New Task Title'
+            placeholder="New Task Title"
             onChange={handleTaskInfoChange}
             required
           />
           <section className={styles.sectionWrapper}>
             <button
-              type='button'
+              type="button"
               onClick={() => {
                 setAssetWindow(true);
               }}
@@ -120,12 +119,12 @@ export default function todoForm({
               ASSETS
             </button>
             <div className={styles.inputContainer}>
-              <label htmlFor='due_date' className={styles.label}>
-                <FaRegCalendarAlt size='35' />
+              <label htmlFor="due_date" className={styles.label}>
+                <FaRegCalendarAlt size="35" />
                 Start
               </label>
               <DatePicker
-                name='due_date'
+                name="due_date"
                 selected={task.startDate}
                 onChange={(date) => {
                   setTask({ ...task, startDate: date });
@@ -137,25 +136,25 @@ export default function todoForm({
             <div className={styles.inputContainer}>
               <label
                 className={styles.label}
-                htmlFor='frequency'
+                htmlFor="frequency"
                 className={styles.label}
               >
-                <GrPowerCycle size='35' />
+                <GrPowerCycle size="35" />
                 <span>Frequency</span>
               </label>
               <select
                 className={styles.input}
-                name='frequency'
+                name="frequency"
                 onChange={handleTaskInfoChange}
               >
-                <option value='none'>None</option>
-                <option value='daily'>Daily</option>
-                <option value='weekly'>Weekly</option>
-                <option value='monthly'>Monthly</option>
-                <option value='biMonthly'>Bi-Monthly</option>
-                <option value='quarterly'>Quarterly</option>
-                <option value='semiAnnual'>Semi Annual</option>
-                <option value='Annual'>Annual</option>
+                <option value="none">None</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="biMonthly">Bi-Monthly</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="semiAnnual">Semi Annual</option>
+                <option value="Annual">Annual</option>
               </select>
             </div>
           </section>
@@ -163,7 +162,7 @@ export default function todoForm({
             <h2>Steps {task.steps && task.steps.length}:</h2>
             <div className={styles.stepBox}>
               <textarea
-                rows='5'
+                rows="5"
                 value={step}
                 onChange={(e) => {
                   setStep(e.target.value);
@@ -171,7 +170,7 @@ export default function todoForm({
               />
               {stepIndex >= 0 ? (
                 <button
-                  type='button'
+                  type="button"
                   className={styles.smallButton}
                   onClick={() => {
                     if (step.length > 0) {
@@ -187,10 +186,9 @@ export default function todoForm({
                 </button>
               ) : (
                 <button
-                  type='button'
+                  type="button"
                   className={styles.smallButton}
                   onClick={() => {
-                    // console.log(step, step.length);
                     if (step.length > 0) {
                       task.steps
                         ? setTask({ ...task, steps: [...task.steps, step] })
@@ -212,7 +210,7 @@ export default function todoForm({
                     key={`step-${index}`}
                   >
                     <button
-                      type='button'
+                      type="button"
                       className={styles.step}
                       onClick={(e) => {
                         setStep(task.steps[index]);
@@ -225,7 +223,7 @@ export default function todoForm({
                     </button>
                     <button
                       className={styles.deleteBtn}
-                      type='button'
+                      type="button"
                       onClick={(e) => {
                         const newArray = [...task.steps];
                         newArray.splice(index, 1);
@@ -233,7 +231,7 @@ export default function todoForm({
                         setStepIndex(-1);
                       }}
                     >
-                      <AiOutlineDelete size='25' />
+                      <AiOutlineDelete size="25" />
                     </button>
                   </div>
                 ))}
