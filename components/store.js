@@ -37,13 +37,11 @@ const Store = ({ children, userInfo, authorized }) => {
       <MagicContext.Provider value={[magic]}>
         <UserContext.Provider value={[user, setUser]}>
           <Layout>
-            <>
-              {/* {navigator.onLine ? ( */}
-              {user && children}
-              {/* ) : ( */}
-              {/* <div>INTERNET CONNECTION LOST</div> */}
-              {/* )} */}
-            </>
+            {/* {navigator.onLine ? ( */}
+            {children}
+            {/* ) : ( */}
+            {/* <div>INTERNET CONNECTION LOST</div> */}
+            {/* )} */}
           </Layout>
         </UserContext.Provider>
       </MagicContext.Provider>

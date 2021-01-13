@@ -7,14 +7,13 @@ import SideNav from './side_nav';
 import Login from './login';
 
 const Layout = ({ children }) => {
-  const [loggedIn] = useContext(LoggedInContext);
   const [user, setUser] = useContext(UserContext);
   return (
     <div className={styles.wrapper}>
       <Head>
         <title>CM-App</title>
       </Head>
-      {loggedIn === true ? (
+      {user ? (
         <div className={styles.mainScreen}>
           <MainNav />
           <div className={styles.horizontal_area}>
