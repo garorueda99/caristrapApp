@@ -7,7 +7,11 @@ import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { GiFactory } from 'react-icons/gi';
 import { VscAccount } from 'react-icons/vsc';
 
+import { useContext } from 'react';
+import { UserContext } from './store';
+
 export default function side_bar() {
+  const [user] = useContext(UserContext);
   return (
     <div className={styles.wrapper}>
       <User />
@@ -20,7 +24,7 @@ export default function side_bar() {
             </li>
           </a>
         </Link> */}
-        <Link href='/'>
+        <Link href="/">
           <a>
             <li>
               <BiTachometer className={styles.icons} />
@@ -28,7 +32,7 @@ export default function side_bar() {
             </li>
           </a>
         </Link>
-        <Link href='/todos'>
+        <Link href="/todos">
           <a>
             <li>
               <AiOutlineUnorderedList className={styles.icons} />
@@ -36,7 +40,7 @@ export default function side_bar() {
             </li>
           </a>
         </Link>
-        <Link href='/assets'>
+        <Link href="/assets">
           <a>
             <li>
               <GiFactory className={styles.icons} />
@@ -44,14 +48,16 @@ export default function side_bar() {
             </li>
           </a>
         </Link>
-        <Link href='/account'>
-          <a>
-            <li>
-              <VscAccount className={styles.icons} />
-              Accounts
-            </li>
-          </a>
-        </Link>
+        {user.profile === 'admin' && (
+          <Link href="/account">
+            <a>
+              <li>
+                <VscAccount className={styles.icons} />
+                Accounts
+              </li>
+            </a>
+          </Link>
+        )}
       </ul>
     </div>
   );
