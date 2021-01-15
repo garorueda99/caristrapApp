@@ -3,7 +3,15 @@ import styles from '../styles/Accounts.module.css';
 import AccountsBar from '../components/accountsBar';
 import Table from '../components/table';
 import { ACCOUNT_COLUMNS } from '../lib/columns';
+import { useContext } from 'react';
+import { UserContext } from '../components/store';
+import styled from 'styled-components';
+
 export default function account() {
+  const [user] = useContext(UserContext);
+  if (user.profile !== 'admin') {
+    return <Wrapper>NOT AUTORIZED</Wrapper>;
+  }
   const [skipPageReset, setSkipPageReset] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [users, setUsers] = useState(null);
@@ -54,3 +62,12 @@ export default function account() {
     </div>
   );
 }
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+`;
