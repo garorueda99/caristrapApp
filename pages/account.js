@@ -1,26 +1,31 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useContext } from 'react';
+import { UserContext } from '../components/store';
+
 import styles from '../styles/Accounts.module.css';
+import styled from 'styled-components';
+import { ACCOUNT_COLUMNS } from '../lib/columns';
+import { formatUserDate } from '../lib/utils';
+
 import AccountsBar from '../components/accountsBar';
 import Table from '../components/table';
-import { ACCOUNT_COLUMNS } from '../lib/columns';
-import { useContext } from 'react';
-import { UserContext } from '../components/store';
-import styled from 'styled-components';
 
 export default function account() {
   const [user] = useContext(UserContext);
   if (user.profile !== 'admin') {
     return <Wrapper>NOT AUTORIZED</Wrapper>;
   }
+
   const [skipPageReset, setSkipPageReset] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [users, setUsers] = useState(null);
+
   useEffect(() => {
     (async () => {
       const data = await fetch('/api/users');
       const response = await data.json();
       if (data.ok) {
-        setUsers(response);
+        const formattedList = formatUserDate(response);
+        setUsers(formattedList);
       }
     })();
   }, []);
