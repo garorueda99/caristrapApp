@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
-import AssetForm from './assetForm';
-import DeleteConfirmation from './assetDeleteConfirmation.js';
+import UserForm from './user';
 export default function accountsBar() {
-  const [showAssetModal, setShowAssetModal] = useState(false);
+  const [showAccountModal, setShowAccountModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
 
   return (
@@ -13,7 +12,7 @@ export default function accountsBar() {
         <button
           className={styles.button}
           onClick={() => {
-            setShowAssetModal(true);
+            setShowAccountModal(true);
           }}
         >
           MODIFY
@@ -28,9 +27,9 @@ export default function accountsBar() {
         </button>
       </div>
 
-      {showAssetModal && (
-        <Modal setShowModal={setShowAssetModal}>
-          <AssetForm setShowModal={setShowAssetModal} setData={setData} />
+      {showAccountModal && (
+        <Modal setShowModal={setShowAccountModal}>
+          <UserForm />
         </Modal>
       )}
       {showDelModal && (

@@ -3,36 +3,36 @@ import { useTable, usePagination, useRowSelect } from 'react-table';
 import styled from 'styled-components';
 
 // Create an editable cell renderer
-const EditableCell = ({
-  value: initialValue,
-  row: { index },
-  column: { id },
-  updateMyData, // This is a custom function that we supplied to our table instance
-}) => {
-  // We need to keep and update the state of the cell normally
-  const [value, setValue] = React.useState(initialValue);
-  const onChange = (e) => {
-    setValue(e.target.value);
-  };
+// const EditableCell = ({
+//   value: initialValue,
+//   row: { index },
+//   column: { id },
+//   updateMyData, // This is a custom function that we supplied to our table instance
+// }) => {
+//   // We need to keep and update the state of the cell normally
+//   const [value, setValue] = React.useState(initialValue);
+//   const onChange = (e) => {
+//     setValue(e.target.value);
+//   };
 
-  // We'll only update the external data when the input is blurred
-  const onBlur = () => {
-    updateMyData(index, id, value);
-    // newData.current = { ...newData, index: id };
-  };
+// We'll only update the external data when the input is blurred
+// const onBlur = () => {
+//   updateMyData(index, id, value);
+//   // newData.current = { ...newData, index: id };
+// };
 
-  // If the initialValue is changed external, sync it up with our state
-  React.useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+// If the initialValue is changed external, sync it up with our state
+//   React.useEffect(() => {
+//     setValue(initialValue);
+//   }, [initialValue]);
 
-  return <input value={value} onChange={onChange} onBlur={onBlur} />;
-};
+//   return <input value={value} onChange={onChange} onBlur={onBlur} />;
+// };
 
 // Set our editable cell renderer as the default Cell renderer
-const defaultColumn = {
-  Cell: EditableCell,
-};
+// const defaultColumn = {
+//   Cell: EditableCell,
+// };
 
 const defaultPropGetter = () => ({});
 
@@ -91,7 +91,6 @@ export default function Table({
     {
       columns,
       data,
-      defaultColumn,
       // use the skipPageReset option to disable page resetting temporarily
       autoResetPage: !skipPageReset,
       // updateMyData isn't part of the API, but
