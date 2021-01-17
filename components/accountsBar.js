@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
+import { BiTestTube } from 'react-icons/bi';
 import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
-import UserForm from './user';
-import styled from 'styled-components';
+import UserForm from './userForm';
 
 export default function accountsBar() {
   const [showAccountModal, setShowAccountModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
-  const [profile, setProfile] = useState(false);
+
   const handleSubmit = () => console.log('submit');
   const handleChange = () => console.log('Change');
 
@@ -34,18 +34,7 @@ export default function accountsBar() {
 
       {showAccountModal && (
         <Modal setShowModal={setShowAccountModal}>
-          <Wrapper>
-            <UserForm />
-            <br></br>
-            <button
-              className={styles.button}
-              onClick={() => {
-                setProfile(!profile);
-              }}
-            >
-              Change to {profile ? 'Admin' : 'User'}
-            </button>
-          </Wrapper>
+          <UserForm styles={styles} />
         </Modal>
       )}
       {showDelModal && (
@@ -61,10 +50,3 @@ export default function accountsBar() {
     </div>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
