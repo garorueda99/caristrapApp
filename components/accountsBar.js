@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
-import AssetForm from './assetForm';
-import DeleteConfirmation from './assetDeleteConfirmation.js';
+import UserForm from './user';
+import styled from 'styled-components';
+
 export default function accountsBar() {
-  const [showAssetModal, setShowAssetModal] = useState(false);
+  const [showAccountModal, setShowAccountModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
+  const [profile, setProfile] = useState(false);
+  const handleSubmit = () => console.log('submit');
+  const handleChange = () => console.log('Change');
 
   return (
     <div className={styles.wrapper}>
@@ -13,7 +17,7 @@ export default function accountsBar() {
         <button
           className={styles.button}
           onClick={() => {
-            setShowAssetModal(true);
+            setShowAccountModal(true);
           }}
         >
           MODIFY
@@ -28,9 +32,20 @@ export default function accountsBar() {
         </button>
       </div>
 
-      {showAssetModal && (
-        <Modal setShowModal={setShowAssetModal}>
-          <AssetForm setShowModal={setShowAssetModal} setData={setData} />
+      {showAccountModal && (
+        <Modal setShowModal={setShowAccountModal}>
+          <Wrapper>
+            <UserForm />
+            <br></br>
+            <button
+              className={styles.button}
+              onClick={() => {
+                setProfile(!profile);
+              }}
+            >
+              Change to {profile ? 'Admin' : 'User'}
+            </button>
+          </Wrapper>
         </Modal>
       )}
       {showDelModal && (
@@ -46,3 +61,10 @@ export default function accountsBar() {
     </div>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
