@@ -47,7 +47,7 @@ const IndeterminateCheckbox = React.forwardRef(
 
     return (
       <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
+        <input type="radio" ref={resolvedRef} {...rest} />
       </>
     );
   }
@@ -93,6 +93,7 @@ export default function Table({
       data,
       // use the skipPageReset option to disable page resetting temporarily
       autoResetPage: !skipPageReset,
+      autoResetSelectedRows: true,
       // updateMyData isn't part of the API, but
       // anything we put into these options will
       // automatically be available on the instance.
@@ -109,11 +110,7 @@ export default function Table({
           id: 'selection',
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
+          Header: ({ getToggleAllRowsSelectedProps }) => <div>Select</div>,
           // The cell can use the individual row's getToggleRowSelectedProps method
           // to the render a checkbox
           Cell: ({ row }) => (
