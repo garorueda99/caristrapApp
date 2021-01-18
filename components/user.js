@@ -8,6 +8,7 @@ export default function user({ email, profile }) {
       <VscAccount size={65} />
       <br></br>
       <div>Email: {email}</div>
+      <br></br>
       <div>Profile: {profile}</div>
     </div>
   );

@@ -58,9 +58,7 @@ export default function account() {
           <Table
             columns={columns}
             data={users}
-            setSelectedRows={setSelectedRows}
-            updateMyData={updateMyData}
-            skipPageReset={skipPageReset}
+            // skipPageReset={skipPageReset}
           />
         </div>
       )}
