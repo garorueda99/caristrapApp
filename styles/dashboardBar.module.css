@@ -1,18 +1,18 @@
 .wrapper {
-  /* width: 100%; */
   flex: 1;
   background-color: var(--card-color-background);
-  /* border: 1.5px dotted var(--primary-border); */
   box-shadow: 0px 0px 3px 0px var(--primary-border);
   border-radius: 4px;
-  /* border: 2px solid blue; */
   height: 6rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 0 10px;
 }
 
+.date {
+  font-size: 2rem;
+}
 .buttons {
   width: 210px;
   display: flex;

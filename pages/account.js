@@ -45,7 +45,7 @@ export default function account() {
         <div className={styles.headerWrapper}>
           <Table
             columns={columns}
-            data={users}
+            data={users || []}
             skipPageReset={skipPageReset}
             setSelectedRows={setSelectedRows}
           />
