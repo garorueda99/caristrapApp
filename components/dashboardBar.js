@@ -10,16 +10,18 @@ export default function dashboardBar() {
   const [calendar, setCalendar] = useState(new Date());
   return (
     <div className={styles.wrapper}>
-      {new Intl.DateTimeFormat('en-US').format(calendar)}
+      <div className={styles.date}>
+        {new Intl.DateTimeFormat('en-US').format(calendar)}
+      </div>
       <div className={styles.buttons}>
         <button className={styles.button}>
-          <IoToday size='45' />
+          <IoToday size="45" />
         </button>
         <button className={styles.button}>
-          <FaCalendarWeek size='45' />
+          <FaCalendarWeek size="45" />
         </button>
         <button className={styles.button}>
-          <CgViewMonth size='45' />
+          <CgViewMonth size="45" />
         </button>
       </div>
     </div>
