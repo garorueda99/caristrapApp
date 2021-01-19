@@ -55,11 +55,7 @@ export default function account() {
       </div>
       {!!users && (
         <div className={styles.headerWrapper}>
-          <Table
-            columns={columns}
-            data={users}
-            // skipPageReset={skipPageReset}
-          />
+          <Table columns={columns} data={users} skipPageReset={skipPageReset} />
         </div>
       )}
     </div>

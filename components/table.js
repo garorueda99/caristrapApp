@@ -39,6 +39,7 @@ export default function Table({
   }
 
   const {
+    toggleAllRowsSelected,
     getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -60,8 +61,6 @@ export default function Table({
       columns,
       data,
       // use the skipPageReset option to disable page resetting temporarily
-      // autoResetPage: !skipPageReset,
-      autoResetSelectedRows: false,
       initialState: { selectedRowIds },
       // updateMyData isn't part of the API, but
       // anything we put into these options will
@@ -85,6 +84,7 @@ export default function Table({
             <div>
               <IndeterminateCheckbox
                 onClick={() => {
+                  toggleAllRowsSelected(false);
                   setSelectedRowId(row.id);
                   console.log(row.getToggleRowSelectedProps());
                 }}
@@ -97,7 +97,6 @@ export default function Table({
       ]);
     }
   );
-
   return (
     <Styles>
       <table {...getTableProps()}>
@@ -134,6 +133,8 @@ export default function Table({
                           className: cell.column.className,
                           style: cell.column.style,
                         },
+                        getColumnProps(cell.column),
+                        getCellProps(cell),
                       ])}
                     >
                       {cell.render('Cell')}
@@ -188,7 +189,6 @@ export default function Table({
             </option>
           ))}
         </select>
-        {JSON.stringify(selectedRowIds)}
       </div>
     </Styles>
   );
