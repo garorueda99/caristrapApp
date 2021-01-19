@@ -7,7 +7,8 @@ export default function user({ email, profile }) {
     <div className={styles.wrapper}>
       <VscAccount size={65} />
       <br></br>
-      <div>Email: {email}</div>
+      <div>Email:</div>
+      <div>{email}</div>
       <br></br>
       <div>Profile: {profile}</div>
     </div>

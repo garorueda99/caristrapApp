@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTable, usePagination, useRowSelect } from 'react-table';
 import styled from 'styled-components';
 
@@ -24,6 +24,7 @@ const IndeterminateCheckbox = React.forwardRef(
 export default function Table({
   columns,
   data,
+  setSelectedRows,
   getHeaderProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
   getCellProps = defaultPropGetter,
@@ -97,6 +98,11 @@ export default function Table({
       ]);
     }
   );
+
+  useEffect(() => {
+    setSelectedRows(...selectedFlatRows.map((d) => d.original));
+  });
+
   return (
     <Styles>
       <table {...getTableProps()}>

@@ -30,32 +30,24 @@ export default function account() {
     })();
   }, []);
 
-  const updateMyData = (rowIndex, columnId, value) => {
-    // We also turn on the flag to not reset the page
-    setSkipPageReset(true);
-    setUsers((old) =>
-      old.map((row, index) => {
-        if (index === rowIndex) {
-          return {
-            ...old[rowIndex],
-            [columnId]: value,
-          };
-        }
-        return row;
-      })
-    );
-  };
-
   const columns = useMemo(() => ACCOUNT_COLUMNS, []);
 
   return (
     <div>
       <div className={styles.headerWrapper}>
-        <AccountsBar />
+        <AccountsBar
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
+        />
       </div>
       {!!users && (
         <div className={styles.headerWrapper}>
-          <Table columns={columns} data={users} skipPageReset={skipPageReset} />
+          <Table
+            columns={columns}
+            data={users}
+            skipPageReset={skipPageReset}
+            setSelectedRows={setSelectedRows}
+          />
         </div>
       )}
     </div>

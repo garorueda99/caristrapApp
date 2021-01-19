@@ -2,19 +2,38 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import User from './user';
 
-export default function UserForm(setShowModal, styles) {
-  const [profile, setProfile] = useState(false);
+export default function UserForm({
+  setShowModal,
+  styles,
+  setSelectedRows,
+  selectedRows,
+}) {
   return (
     <Wrapper>
-      <User />
+      <User email={selectedRows.email} profile={selectedRows.profile} />
       <br></br>
       <button
         className={styles.button}
-        onClick={() => {
-          setProfile(!profile);
+        onClick={async () => {
+          try {
+            const res = await fetch('/api/user', {
+              method: 'PATCH',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'applicatrion/json',
+              },
+              body: JSON.stringify({
+                email: selectedRows.email,
+                newProfile: selectedRows.profile === 'admin' ? 'user' : 'admin',
+              }),
+            });
+            const data = await res.json();
+            setData(data.assets);
+            setShowModal(false);
+          } catch (err) {}
         }}
       >
-        Change to {profile ? 'Admin' : 'User'}
+        Change to {selectedRows.profile === 'admin' ? 'user' : 'admin'}
       </button>
     </Wrapper>
   );

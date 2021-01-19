@@ -4,7 +4,7 @@ import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
 import UserForm from './userForm';
 
-export default function accountsBar() {
+export default function accountsBar({ selectedRows, setSelectedRows }) {
   const [showAccountModal, setShowAccountModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
 
@@ -22,19 +22,15 @@ export default function accountsBar() {
         >
           MODIFY
         </button>
-        <button
-          className={styles.button}
-          onClick={() => {
-            setShowAssetModal(true);
-          }}
-        >
-          ADD NEW
-        </button>
       </div>
 
       {showAccountModal && (
         <Modal setShowModal={setShowAccountModal}>
-          <UserForm styles={styles} />
+          <UserForm
+            styles={styles}
+            setSelectedRows={setSelectedRows}
+            selectedRows={selectedRows}
+          />
         </Modal>
       )}
       {showDelModal && (
