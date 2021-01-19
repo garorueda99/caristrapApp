@@ -1,38 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTable, usePagination, useRowSelect } from 'react-table';
 import styled from 'styled-components';
-
-// Create an editable cell renderer
-// const EditableCell = ({
-//   value: initialValue,
-//   row: { index },
-//   column: { id },
-//   updateMyData, // This is a custom function that we supplied to our table instance
-// }) => {
-//   // We need to keep and update the state of the cell normally
-//   const [value, setValue] = React.useState(initialValue);
-//   const onChange = (e) => {
-//     setValue(e.target.value);
-//   };
-
-// We'll only update the external data when the input is blurred
-// const onBlur = () => {
-//   updateMyData(index, id, value);
-//   // newData.current = { ...newData, index: id };
-// };
-
-// If the initialValue is changed external, sync it up with our state
-//   React.useEffect(() => {
-//     setValue(initialValue);
-//   }, [initialValue]);
-
-//   return <input value={value} onChange={onChange} onBlur={onBlur} />;
-// };
-
-// Set our editable cell renderer as the default Cell renderer
-// const defaultColumn = {
-//   Cell: EditableCell,
-// };
 
 const defaultPropGetter = () => ({});
 
@@ -47,7 +15,7 @@ const IndeterminateCheckbox = React.forwardRef(
 
     return (
       <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
+        <input type="radio" ref={resolvedRef} {...rest} />
       </>
     );
   }
@@ -56,27 +24,30 @@ const IndeterminateCheckbox = React.forwardRef(
 export default function Table({
   columns,
   data,
-  updateMyData,
-  skipPageReset,
-  selectedRows,
   setSelectedRows,
   getHeaderProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
-  getRowProps = defaultPropGetter,
   getCellProps = defaultPropGetter,
   isLoading,
   isError,
-  newData,
 }) {
   if (isError) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
+  const [selectedRowId, setSelectedRowId] = useState(null);
+  const selectedRowIds = [];
+  if (selectedRowId) {
+    selectedRowIds.push(selectedRowId);
+  }
+
   const {
+    toggleAllRowsSelected,
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
     page,
+    selectedFlatRows,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -85,20 +56,18 @@ export default function Table({
     nextPage,
     previousPage,
     setPageSize,
-    selectedFlatRows,
-    state: { pageIndex, pageSize, selectedRowIds },
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
       data,
       // use the skipPageReset option to disable page resetting temporarily
-      autoResetPage: !skipPageReset,
+      initialState: { selectedRowIds },
       // updateMyData isn't part of the API, but
       // anything we put into these options will
       // automatically be available on the instance.
       // That way we can call this function from our
       // cell renderer!
-      updateMyData,
     },
     usePagination,
     useRowSelect,
@@ -109,16 +78,19 @@ export default function Table({
           id: 'selection',
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
+          Header: <div>Select</div>,
           // The cell can use the individual row's getToggleRowSelectedProps method
           // to the render a checkbox
           Cell: ({ row }) => (
             <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+              <IndeterminateCheckbox
+                onClick={() => {
+                  toggleAllRowsSelected(false);
+                  setSelectedRowId(row.id);
+                  console.log(row.getToggleRowSelectedProps());
+                }}
+                {...row.getToggleRowSelectedProps()}
+              />
             </div>
           ),
         },
@@ -128,11 +100,8 @@ export default function Table({
   );
 
   useEffect(() => {
-    selectedFlatRows.length > 0 &&
-      setSelectedRows(selectedFlatRows.map((d) => d.original['_id']));
-  }, [selectedFlatRows.length]);
-
-  useEffect(() => {}, [selectedRows]);
+    setSelectedRows(...selectedFlatRows.map((d) => d.original));
+  });
 
   return (
     <Styles>

@@ -14,7 +14,8 @@ export default function side_bar() {
   const [user] = useContext(UserContext);
   return (
     <div className={styles.wrapper}>
-      <User />
+      {console.log('==>', user)}
+      {user && <User email={user.email} profile={user.profile} />}
       <ul className={styles.list}>
         {/* <Link href='/'>
           <a>

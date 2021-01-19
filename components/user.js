@@ -1,15 +1,16 @@
 import { VscAccount } from 'react-icons/vsc';
 import styles from '../styles/User.module.css';
 import { useContext } from 'react';
-import { UserContext } from './store';
 
-export default function user() {
-  const [user] = useContext(UserContext);
+export default function user({ email, profile }) {
   return (
     <div className={styles.wrapper}>
       <VscAccount size={65} />
-      <div>{user.email}</div>
-      <div>Profile: {user.profile}</div>
+      <br></br>
+      <div>Email:</div>
+      <div>{email}</div>
+      <br></br>
+      <div>Profile: {profile}</div>
     </div>
   );
 }

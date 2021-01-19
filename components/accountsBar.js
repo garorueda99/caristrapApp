@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
+import { BiTestTube } from 'react-icons/bi';
 import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
-import UserForm from './user';
-import styled from 'styled-components';
+import UserForm from './userForm';
 
-export default function accountsBar() {
+export default function accountsBar({
+  selectedRows,
+  setSelectedRows,
+  setUsers,
+}) {
   const [showAccountModal, setShowAccountModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
-  const [profile, setProfile] = useState(false);
+
   const handleSubmit = () => console.log('submit');
   const handleChange = () => console.log('Change');
 
@@ -22,49 +26,19 @@ export default function accountsBar() {
         >
           MODIFY
         </button>
-        <button
-          className={styles.button}
-          onClick={() => {
-            setShowAssetModal(true);
-          }}
-        >
-          ADD NEW
-        </button>
       </div>
 
       {showAccountModal && (
         <Modal setShowModal={setShowAccountModal}>
-          <Wrapper>
-            <UserForm />
-            <br></br>
-            <button
-              className={styles.button}
-              onClick={() => {
-                setProfile(!profile);
-              }}
-            >
-              Change to {profile ? 'Admin' : 'User'}
-            </button>
-          </Wrapper>
-        </Modal>
-      )}
-      {showDelModal && (
-        <Modal setShowModal={setShowDelModal}>
-          <DeleteConfirmation
-            setShowModal={setShowDelModal}
-            selectedRows={selectedRows}
+          <UserForm
+            styles={styles}
             setSelectedRows={setSelectedRows}
-            setData={setData}
+            selectedRows={selectedRows}
+            setUsers={setUsers}
+            setShowModal={setShowAccountModal}
           />
         </Modal>
       )}
     </div>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
