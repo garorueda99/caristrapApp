@@ -4,7 +4,11 @@ import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
 import UserForm from './userForm';
 
-export default function accountsBar({ selectedRows, setSelectedRows }) {
+export default function accountsBar({
+  selectedRows,
+  setSelectedRows,
+  setUsers,
+}) {
   const [showAccountModal, setShowAccountModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
 
@@ -30,16 +34,8 @@ export default function accountsBar({ selectedRows, setSelectedRows }) {
             styles={styles}
             setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
-          />
-        </Modal>
-      )}
-      {showDelModal && (
-        <Modal setShowModal={setShowDelModal}>
-          <DeleteConfirmation
-            setShowModal={setShowDelModal}
-            selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
-            setData={setData}
+            setUsers={setUsers}
+            setShowModal={setShowAccountModal}
           />
         </Modal>
       )}

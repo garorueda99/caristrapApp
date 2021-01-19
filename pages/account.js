@@ -38,6 +38,7 @@ export default function account() {
         <AccountsBar
           selectedRows={selectedRows}
           setSelectedRows={setSelectedRows}
+          setUsers={setUsers}
         />
       </div>
       {!!users && (

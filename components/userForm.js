@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import User from './user';
+import { formatUserDate } from '../lib/utils';
 
 export default function UserForm({
   setShowModal,
   styles,
   setSelectedRows,
   selectedRows,
+  setUsers,
 }) {
   return (
     <Wrapper>
@@ -27,8 +29,14 @@ export default function UserForm({
                 newProfile: selectedRows.profile === 'admin' ? 'user' : 'admin',
               }),
             });
-            const data = await res.json();
-            setData(data.assets);
+            (async () => {
+              const data = await fetch('/api/users');
+              const response = await data.json();
+              if (data.ok) {
+                const formattedList = formatUserDate(response);
+                setUsers(formattedList);
+              }
+            })();
             setShowModal(false);
           } catch (err) {}
         }}
