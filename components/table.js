@@ -87,7 +87,6 @@ export default function Table({
                 onClick={() => {
                   toggleAllRowsSelected(false);
                   setSelectedRowId(row.id);
-                  console.log(row.getToggleRowSelectedProps());
                 }}
                 {...row.getToggleRowSelectedProps()}
               />
