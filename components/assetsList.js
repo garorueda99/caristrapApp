@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import styles from '../styles/TodoForm.module.css';
 
 export default function assetsList({ setAssetWindow, task, setTask }) {
   const removeAssetsKey = () => {
@@ -19,13 +20,12 @@ export default function assetsList({ setAssetWindow, task, setTask }) {
 
   return (
     <div>
-      <h2>Select Assest for {task.title}</h2>
-      {/* {JSON.stringify(task.assets)} */}
-      <div>
+      <h2>Select Assest for {task.title || 'New Task'}</h2>
+      <div className={styles.assetsList}>
         {data.map((element, index) => (
           <div key={`asset-${index}`}>
             <input
-              type='checkbox'
+              type="checkbox"
               name={element._id}
               id={element._id}
               checked={task.assets ? element._id in task.assets : false}
@@ -55,7 +55,9 @@ export default function assetsList({ setAssetWindow, task, setTask }) {
           </div>
         ))}
       </div>
-      <button onClick={() => setAssetWindow(false)}>CLOSE</button>
+      <button onClick={() => setAssetWindow(false)} className={styles.button}>
+        CLOSE
+      </button>
     </div>
   );
 }

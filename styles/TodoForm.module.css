@@ -138,3 +138,17 @@
 .textStep {
   text-align: left;
 }
+
+.assetsList {
+  margin: 10px 5px 20px 5px;
+}
+
+.assetsList > div {
+  margin-bottom: 10px;
+}
+
+.assetsContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}

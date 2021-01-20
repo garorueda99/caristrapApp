@@ -88,7 +88,7 @@ export default function todoForm({
       setTask({ ...todoPointer, startDate: new Date(todoPointer.startDate) });
     }
   }, []);
-
+  const qty = Object.keys(task.assets || {}).length;
   return (
     <div className={styles.wrapper}>
       {assetWindow ? (
@@ -99,8 +99,6 @@ export default function todoForm({
         />
       ) : (
         <form className={styles.formWrapper} onSubmit={handleSubmit}>
-          {/* {JSON.stringify(task)} */}
-          {/* <div>{JSON.stringify(step)}</div> */}
           <input
             className={styles.title}
             name="title"
@@ -110,14 +108,18 @@ export default function todoForm({
             required
           />
           <section className={styles.sectionWrapper}>
-            <button
-              type="button"
-              onClick={() => {
-                setAssetWindow(true);
-              }}
-            >
-              ASSETS
-            </button>
+            <div className={styles.assetsContainer}>
+              <button
+                type="button"
+                onClick={() => {
+                  setAssetWindow(true);
+                }}
+                className={styles.button}
+              >
+                ASSETS
+              </button>
+              <div style={{ marginLeft: '25px' }}>{qty} Assest(s)</div>
+            </div>
             <div className={styles.inputContainer}>
               <label htmlFor="due_date" className={styles.label}>
                 <FaRegCalendarAlt size="35" />

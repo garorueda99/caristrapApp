@@ -29,7 +29,6 @@ export default function todos() {
           const res = await fetch('/api/todos');
           const data = await res.json();
           const todos = formatList(data);
-          console.log(todos);
           setData(todos);
         })();
       } catch (err) {
