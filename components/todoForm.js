@@ -99,8 +99,6 @@ export default function todoForm({
         />
       ) : (
         <form className={styles.formWrapper} onSubmit={handleSubmit}>
-          {/* {JSON.stringify(task)} */}
-          {/* <div>{JSON.stringify(step)}</div> */}
           <input
             className={styles.title}
             name="title"
@@ -115,6 +113,8 @@ export default function todoForm({
               onClick={() => {
                 setAssetWindow(true);
               }}
+              className={styles.button}
+              style={{ marginBottom: '10px', boder: '9px solid green' }}
             >
               ASSETS
             </button>
