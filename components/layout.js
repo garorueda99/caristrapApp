@@ -18,7 +18,15 @@ const Layout = ({ children }) => {
           <MainNav />
           <div className={styles.horizontal_area}>
             <SideNav />
-            <div style={{ flex: 1 }}>{children}</div>
+            <div
+              style={{
+                flex: 1,
+                height: 'calc(100% - 70px)',
+                overflowY: 'auto',
+              }}
+            >
+              {children}
+            </div>
           </div>
         </div>
       ) : (
