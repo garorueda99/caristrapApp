@@ -118,7 +118,7 @@ export default function todoForm({
               >
                 ASSETS
               </button>
-              <div style={{ marginLeft: '25px' }}>{qty} Assest(s)</div>
+              <div style={{ marginLeft: '25px' }}>{qty} Asset(s)</div>
             </div>
             <div className={styles.inputContainer}>
               <label htmlFor="due_date" className={styles.label}>

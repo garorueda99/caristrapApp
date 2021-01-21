@@ -20,7 +20,7 @@ export default function assetsList({ setAssetWindow, task, setTask }) {
 
   return (
     <div>
-      <h2>Select Assest for {task.title || 'New Task'}</h2>
+      <h2>Select Asset for {task.title || 'New Task'}</h2>
       <div className={styles.assetsList}>
         {data.map((element, index) => (
           <div key={`asset-${index}`}>

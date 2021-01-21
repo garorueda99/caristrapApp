@@ -8,7 +8,7 @@ export default function Home() {
   const [user, setUser] = useContext(UserContext);
 
   return (
-    <div>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Head>
         <title>Caristrap CMMS</title>
         {/* <link rel='icon' href='/favicon.ico' /> */}
@@ -17,8 +17,10 @@ export default function Home() {
         <DashboardBar />
       </div>
       <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to the Dashboard</h1>
-        <Reminder />
+        <div className={styles.border}>
+          <h1 className={styles.title}>Welcome to the Dashboard</h1>
+          <Reminder />
+        </div>
       </main>
     </div>
   );

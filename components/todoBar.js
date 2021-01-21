@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styles from '../styles/AssetsBar.module.css';
 import Modal from './modal';
 import TodoForm from './todoForm';
 import { formatList } from '../lib/utils';
+import { UserContext } from './store';
 
 export default function todoBar({
   selectedRows,
@@ -11,6 +12,7 @@ export default function todoBar({
   setView,
   view,
 }) {
+  const [user] = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
   const [todoPointer, setTodoPointer] = useState(null);
   return (
@@ -21,18 +23,18 @@ export default function todoBar({
           setView(e.target.value);
         }}
       >
-        <label htmlFor='table' className={styles.label}>
+        <label htmlFor="table" className={styles.label}>
           <input
-            type='radio'
-            id='table'
-            value='table'
-            name='view'
+            type="radio"
+            id="table"
+            value="table"
+            name="view"
             defaultChecked
           />
           Table
         </label>
-        <label htmlFor='cards' className={styles.label}>
-          <input type='radio' id='cards' value='cards' name='view' />
+        <label htmlFor="cards" className={styles.label}>
+          <input type="radio" id="cards" value="cards" name="view" />
           Cards
         </label>
       </fieldset>
@@ -45,29 +47,34 @@ export default function todoBar({
         >
           ADD NEW
         </button>
-        <button
-          className={styles.button}
-          onClick={async () => {
-            if (selectedRows.length > 0) {
-              try {
-                const res = await fetch('/api/todos', {
-                  method: 'DELETE',
-                  headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'applicatrion/json',
-                  },
-                  body: JSON.stringify({ _ids: selectedRows }),
-                });
-                setSelectedRows([]);
-                const data = await res.json();
-                setData(formatList(data));
-              } catch (err) {}
-            }
-          }}
-        >
-          DELETE
-        </button>
-        <button className={styles.button}>SAVE</button>
+        {user.profile === 'admin' && (
+          <button
+            className={styles.button}
+            onClick={async () => {
+              if (selectedRows._id) {
+                console.log('here');
+                try {
+                  const res = await fetch('/api/todos', {
+                    method: 'DELETE',
+                    headers: {
+                      Accept: 'application/json',
+                      'Content-Type': 'applicatrion/json',
+                    },
+                    body: JSON.stringify({ _ids: selectedRows }),
+                  });
+                  setSelectedRows([]);
+                  const data = await res.json();
+                  setData(formatList(data));
+                } catch (err) {}
+              }
+            }}
+          >
+            DELETE
+          </button>
+        )}
+        {user.profile === 'admin' && (
+          <button className={styles.button}>SAVE</button>
+        )}
         <button className={styles.button}>EXPORT</button>
       </div>
       {showModal && (
