@@ -13,17 +13,15 @@ export default function dashboardBar() {
       <div className={styles.date}>
         {new Intl.DateTimeFormat('en-US').format(calendar)}
       </div>
-      <div className={styles.buttons}>
-        <button className={styles.button}>
-          <IoToday size="45" />
-        </button>
-        <button className={styles.button}>
+      <button className={styles.button}>
+        <IoToday size="45" />
+      </button>
+      {/* <button className={styles.button}>
           <FaCalendarWeek size="45" />
         </button>
         <button className={styles.button}>
           <CgViewMonth size="45" />
-        </button>
-      </div>
+        </button> */}
     </div>
   );
 }

@@ -73,7 +73,7 @@ export default function todoBar({
           </button>
         )}
         {user.profile === 'admin' && (
-          <button className={styles.button}>SAVE</button>
+          <button className={styles.button}>RESOLVE</button>
         )}
         <button className={styles.button}>EXPORT</button>
       </div>
