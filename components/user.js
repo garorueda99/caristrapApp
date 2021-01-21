@@ -1,6 +1,5 @@
 import { VscAccount } from 'react-icons/vsc';
 import styles from '../styles/User.module.css';
-import { useContext } from 'react';
 
 export default function user({ email, profile }) {
   return (
