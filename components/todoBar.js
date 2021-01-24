@@ -52,7 +52,6 @@ export default function todoBar({
             className={styles.button}
             onClick={async () => {
               if (selectedRows._id) {
-                console.log('here');
                 try {
                   const res = await fetch('/api/todos', {
                     method: 'DELETE',
