@@ -37,7 +37,7 @@ export default function assetsBar({
             DELETE
           </button>
         )}
-        {user.profile === 'admin' && (
+        {user.profile === 'check' && (
           <button
             className={styles.button}
             onClick={async () => {
